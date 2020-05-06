@@ -3,7 +3,7 @@
 if (!defined('SECURE_BOOT')) define('SECURE_BOOT', true);
 session_start();
 
-if(!file_exists('config.php')) {
+if(!file_exists('./includes/config.php')) {
   echo "Brak pliku konfiguracyjnego, skopiuj zawartość pliku config.sample.php do pliku config.php utworzonego w folderze includes";
   exit();
 }
