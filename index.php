@@ -1,10 +1,12 @@
 <?php
 
 require_once "includes/init.php";
-require "views/header.php";
+include_once "views/header.php";
+
+include "views/navs/index-nav.php";
 
 ?>
 
-Strona główna
+<h1>Strona główna</h1>
 
-<?php require "views/footer.php"; ?>
+<?php include_once "views/footer.php"; ?>
