@@ -108,7 +108,7 @@ ALTER TABLE `users`
   ADD CONSTRAINT `users_roles` FOREIGN KEY (`role`) REFERENCES `roles` (`id`);";
 
 $schema[] = "
-INSERT INTO `roles` (`id`, `name`) VALUES
+INSERT INTO `roles` (`id`, `name`, `code`) VALUES
 (1, 'Administrator', 'ADMIN'),
 (2, 'Pracownik', 'EMPLOYEE'),
 (3, 'Lekarz', 'DOCTOR'),
