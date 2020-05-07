@@ -1,5 +1,7 @@
 <?php
 
+if (!defined('SECURE_BOOT')) define('SECURE_BOOT', true);
+
 define('PAGE_TITLE', 'Użytkownicy');
 define('PAGE_NEEDS_AUTHORIZATION', true);
 

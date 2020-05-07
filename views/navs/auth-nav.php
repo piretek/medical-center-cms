@@ -1,3 +1,9 @@
+<?php
+
+if (!defined('SECURE_BOOT')) exit();
+
+?>
+
 <nav class='authorize-nav'>
   <ul class='navigation'>
     <?php if (AUTHORIZED) : ?>

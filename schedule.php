@@ -1,5 +1,7 @@
 <?php
 
+if (!defined('SECURE_BOOT')) define('SECURE_BOOT', true);
+
 define('PAGE_TITLE', 'Grafik lekarzy');
 define('PAGE_NEEDS_AUTHORIZATION', true);
 

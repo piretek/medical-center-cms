@@ -1,3 +1,8 @@
+<?php
+
+if (!defined('SECURE_BOOT')) exit();
+
+?>
 <nav class='header-navigation'>
   <ul class='navigation'>
     <li>
