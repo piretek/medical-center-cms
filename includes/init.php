@@ -51,27 +51,30 @@ if (isset($_SESSION['user']) && !empty($_SESSION['user'])) {
 
     // Define user permissions
     foreach($roles as $role) {
+      $ruleName = 'IS_'.$role;
 
-      if ($role == 'PATIENT' && $hasPatientInfo) {
-        define('IS_'.$role, true);
-      }
-      else {
-        define('IS_'.$role, false);
-      }
+      if ($role == 'DOCTOR' || $role == 'PATIENT') {
+        if ($role == 'PATIENT' && $hasPatientInfo) {
+          define($ruleName, true);
+        }
+        else if (!defined($ruleName)) {
+          define($ruleName, false);
+        }
 
-      if ($role == 'DOCTOR' && $hasDoctorInfo) {
-        define('IS_'.$role, true);
-      }
-      else {
-        define('IS_'.$role, false);
+        if ($role == 'DOCTOR' && $hasDoctorInfo) {
+          define($ruleName, true);
+        }
+        else if (!defined($ruleName)) {
+          define($ruleName, false);
+        }
       }
 
       if ($role != 'DOCTOR' && $role != 'PATIENT') {
         if ($userRole == $role) {
-          define('IS_'.$role, true);
+          define($ruleName, true);
         }
-        else {
-          define('IS_'.$role, false);
+        else if (!defined($ruleName)) {
+          define($ruleName, false);
         }
       }
     }
