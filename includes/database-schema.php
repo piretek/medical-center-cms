@@ -91,7 +91,7 @@ ALTER TABLE `doctors`
 $schema[] = "
 ALTER TABLE `patients`
   ADD CONSTRAINT `patients_users` FOREIGN KEY (`user`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;";
-  
+
 $schema[] = "
 ALTER TABLE `reservations`
   ADD CONSTRAINT `reservation_date` FOREIGN KEY (`date`) REFERENCES `schedule` (`id`),
@@ -100,10 +100,17 @@ ALTER TABLE `reservations`
 $schema[] = "
 ALTER TABLE `schedule`
   ADD CONSTRAINT `schedule_doctor` FOREIGN KEY (`doctor`) REFERENCES `doctors` (`id`),
-  ADD CONSTRAINT `schedule_rooms` FOREIGN KEY (`room`) REFERENCES `rooms` (`id`);";  
+  ADD CONSTRAINT `schedule_rooms` FOREIGN KEY (`room`) REFERENCES `rooms` (`id`);";
 
-$schema [] = "
+$schema[] = "
 ALTER TABLE `users`
   ADD CONSTRAINT `users_roles` FOREIGN KEY (`role`) REFERENCES `roles` (`id`);";
+
+$schema[] = "
+INSERT INTO `roles` (`id`, `name`) VALUES
+(1, 'Administrator'),
+(2, 'Pracownik'),
+(3, 'Lekarz'),
+(4, 'Pacjent');";
 
 return $schema;
