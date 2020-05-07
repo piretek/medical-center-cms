@@ -30,13 +30,21 @@ a, a:visited {
   text-decoration: none;
 }
 
+nav ul.dashboard,
 nav ul.navigation {
   list-style-type: none;
   margin: 0;
   padding: 0;
+}
+
+nav ul.navigation {
   display: flex;
   flex-wrap: wrap;
   height: 100%;
+  font-weight: 200;
+  font-size: 1.1em;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 nav ul.navigation li a {
@@ -120,4 +128,55 @@ header {
 
 .person-icon {
   margin-bottom: -3px;
+}
+
+main {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+div.paper {
+  padding: 10px 50px;
+  background-color: #FFF;
+  color: #424656;
+  border-radius: 15px 0 15px 0;
+  box-shadow: 20px 20px 60px #071223, -20px -20px 60px #112a4e;
+  width: calc(80% - 25px);
+  margin-left: 25px;
+}
+
+h1.paper-title {
+  text-transform: uppercase;
+  padding: 15px 0;
+  font-weight: 300;
+  border-bottom: .4px solid #424656;
+}
+
+nav.dashboard-navigation {
+  width: calc(20% - 25px);
+  margin-right: 25px;
+}
+
+nav ul.dashboard {
+  padding: 10px;
+}
+
+nav ul.dashboard li a {
+  display: block;
+  color: #F2FAFF;
+  text-align: center;
+  margin: 10px 0;
+  padding: 10px 0;
+  width: 100%;
+  background-color: #082146;
+  border-radius: 15px 0 15px 0;
+  box-shadow: 10px 10px 60px #071223, -10px -10px 60px #112a4e;
+  font-weight: 200;
+  text-transform: uppercase;
+}
+
+nav ul.dashboard li a.active {
+  background: #68EBB8;
+  box-shadow: inset 20px 20px 60px #58c89c,
+            inset -20px -20px 60px #78ffd4;
 }
