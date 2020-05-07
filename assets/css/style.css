@@ -36,12 +36,14 @@ nav ul.navigation {
   padding: 0;
   display: flex;
   flex-wrap: wrap;
+  height: 100%;
 }
 
 nav ul.navigation li a {
   color: inherit;
   display: block;
-  padding: 10px 15px;
+  padding: 30px 15px;
+  height: 100%;
 }
 
 main {
@@ -90,12 +92,24 @@ main {
 header {
   display: flex;
   flex-wrap: wrap;
-  padding: 20px 100px;
+  padding: 0 100px;
 }
 
 .header-logo {
   width: 35%;
-  text-align: center;
+}
+
+.header-logo h1,
+.header-logo h2,
+.header-logo h3,
+.header-logo h4,
+.header-logo h5,
+.header-logo h6 {
+  padding: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .header-navs {
