@@ -8,26 +8,32 @@ $cards = [
   [
     'url' => 'new-reservation.php',
     'name' => 'Zarezerwuj wizytę',
+    'permission' => IS_PATIENT
   ],
   [
     'url' => 'create-patient-account.php',
-    'name' => 'Zarejestruj konto pacjenta'
+    'name' => 'Zarejestruj konto pacjenta',
+    'permission' => !IS_PATIENT
   ],
   [
     'url' => 'user-reservations.php',
-    'name' => 'Historia wizyt'
+    'name' => 'Historia wizyt',
+    'permission' => IS_PATIENT
   ],
   [
     'url' => 'reservations.php',
-    'name' => 'Zarządzanie rezerwacjami'
+    'name' => 'Zarządzanie rezerwacjami',
+    'permission' => IS_ADMIN || IS_DOCTOR || IS_EMPLOYEE
   ],
   [
     'url' => 'schedule.php',
-    'name' => 'Grafik lekarzy'
+    'name' => 'Grafik lekarzy',
+    'permission' => IS_ADMIN || IS_EMPLOYEE
   ],
   [
     'url' => 'users.php',
-    'name' => 'Użytkownicy'
+    'name' => 'Użytkownicy',
+    'permission' => IS_ADMIN
   ],
   [
     'url' => 'user-account.php',
