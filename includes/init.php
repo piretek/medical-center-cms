@@ -26,3 +26,15 @@ if (!empty($configErrors)) {
 $db = create_database_connection( $config['db'] );
 
 date_default_timezone_set('Europe/Warsaw');
+
+if (isset($_SESSION['user']) && !empty($_SESSION['user'])) {
+  define('AUTHORIZED', true);
+}
+else {
+  define('AUTHORIZED', false);
+}
+
+if (defined('PAGE_NEEDS_AUTHORIZATION') && PAGE_NEEDS_AUTHORIZATION && !AUTHORIZED && basename($_SERVER['PHP_SELF']) !== 'index.php') {
+  header("Location: {$config['site_url']}/");
+  exit;
+}

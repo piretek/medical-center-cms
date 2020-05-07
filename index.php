@@ -1,5 +1,8 @@
 <?php
 
+define('PAGE_TITLE', 'Strona główna');
+define('PAGE_NEEDS_AUTHORIZATION', false);
+
 require_once "includes/init.php";
 include_once "views/header.php";
 
