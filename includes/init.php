@@ -1,6 +1,6 @@
 <?php
 
-if (!defined('SECURE_BOOT')) define('SECURE_BOOT', true);
+if (!defined('SECURE_BOOT')) exit();
 session_start();
 
 $_SESSION['user'] = 1;
