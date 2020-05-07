@@ -43,6 +43,7 @@ $schema[] = "
 CREATE TABLE IF NOT EXISTS `roles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
+  `code` varchar(10) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
 
@@ -108,9 +109,9 @@ ALTER TABLE `users`
 
 $schema[] = "
 INSERT INTO `roles` (`id`, `name`) VALUES
-(1, 'Administrator'),
-(2, 'Pracownik'),
-(3, 'Lekarz'),
-(4, 'Pacjent');";
+(1, 'Administrator', 'ADMIN'),
+(2, 'Pracownik', 'EMPLOYEE'),
+(3, 'Lekarz', 'DOCTOR'),
+(4, 'Pacjent', 'PATIENT');";
 
 return $schema;
