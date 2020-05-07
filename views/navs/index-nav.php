@@ -12,8 +12,5 @@
     <li>
       <a href='#'>Kontakt</a>
     </li>
-    <li>
-      <a href='#'>Zaloguj się</a>
-    </li>
   </ul>
 </nav>
