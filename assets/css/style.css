@@ -87,3 +87,23 @@ main {
 .col-1per3 { width: calc(100% / 3); }
 .col-2per3 { width: calc(calc(100% / 3) * 2) ; }
 
+header {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px 100px;
+}
+
+.header-logo {
+  width: 35%;
+  text-align: center;
+}
+
+.header-navs {
+  display: flex;
+  justify-content: space-between;
+  width: 65%;
+}
+
+.person-icon {
+  margin-bottom: -3px;
+}
