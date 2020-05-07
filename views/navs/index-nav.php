@@ -1,9 +1,19 @@
 <nav class='header-navigation'>
   <ul class='navigation'>
-    <li>Strona główna</li>
-    <li>O firmie</li>
-    <li>Umów wizytę</li>
-    <li>Kontakt</li>
-    <li>Zaloguj się</li>
+    <li>
+      <a href='#'>Strona główna</a>
+    </li>
+    <li>
+      <a href='#'>O firmie</a>
+    </li>
+    <li>
+      <a href='#'>Umów wizytę</a>
+    </li>
+    <li>
+      <a href='#'>Kontakt</a>
+    </li>
+    <li>
+      <a href='#'>Zaloguj się</a>
+    </li>
   </ul>
 </nav>

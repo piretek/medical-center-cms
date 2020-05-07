@@ -1,6 +1,89 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   padding: 0;
-  font-style: 'Arial', sans-serif;
+  font-family: 'Jost', sans-serif;
   font-size: 16px;
 }
+
+.wrapper {
+  background-image: linear-gradient(to right bottom, #051937, #041836, #031735, #021634, #011533);
+  color: #F2FAFF;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding-top: .2em;
+  padding-bottom: .4em;
+}
+
+p {
+  padding: .1em 0;
+}
+
+a, a:visited {
+  color: #68EBB8;
+  text-decoration: none;
+}
+
+nav ul.navigation {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+nav ul.navigation li a {
+  color: inherit;
+  display: block;
+  padding: 10px 15px;
+}
+
+main {
+  padding: 50px;
+}
+
+.columns {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 5px;
+}
+
+.columns.columns__no-spacing {
+  padding: 0;
+}
+
+.columns.columns__bigger-v-spacing {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.columns.col-center {
+  justify-content: center;
+}
+
+.column {
+  padding: 5px;
+}
+
+.columns.columns__no-spacing > .column {
+  padding: 0;
+}
+
+.column.col-100 { width: 100%; }
+.column.col-80 { width: 80%; }
+.column.col-75 { width: 75%; }
+.column.col-60 { width: 60%; }
+.column.col-50 { width: 50%; }
+.column.col-40 { width: 40%; }
+.column.col-30 { width: 30%; }
+.column.col-25 { width: 25%; }
+.col-20 { width: 20%; }
+.col-1per3 { width: calc(100% / 3); }
+.col-2per3 { width: calc(calc(100% / 3) * 2) ; }
+
