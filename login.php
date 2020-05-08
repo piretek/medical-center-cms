@@ -4,7 +4,7 @@ if (!defined('SECURE_BOOT')) define('SECURE_BOOT', true);
 
 require_once './includes/init.php';
 
-/* - - - - - - - - - - - - - - - - L O G I N - - - - - - - - - - - - - - - - - - - - - */
+// - - - - - - - - - - - - - - - - L O G I N - - - - - - - - - - - - - - - - - - - - - //
 
 if (isset($_POST['action']) && $_POST['action'] == 'login') {
 
@@ -45,8 +45,18 @@ if (isset($_POST['action']) && $_POST['action'] == 'login') {
 
       $_SESSION['user'] = (int) $user['id'];
 
-      header("Location: {$config['site_url']}/dashboard.php");
-      exit();
+      if (IS_PATIENT) {  
+
+        header("Location: {$config['site_url']}/new-reservation.php");
+        exit();
+      
+      }  
+      elseif (IS_DOCTOR || IS_ADMIN || IS_EMPLOYEE) {
+        
+        header("Location: {$config['site_url']}/reservations.php");
+        exit();
+
+      }
     }
     else {
       $_SESSION['auth-error'] = 'Niepoprawny login lub hasło.';
@@ -56,7 +66,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'login') {
   }
 }
 
-/* - - - - - - - - - - - - - - - R E G I S T E R - - - - - - - - - - - - - - - - - - */
+// - - - - - - - - - - - - - - - R E G I S T E R - - - - - - - - - - - - - - - - - - //
 
 else if (isset($_POST['action']) && $_POST['action'] == 'register') {
 
@@ -148,6 +158,16 @@ else if (isset($_POST['action']) && $_POST['action'] == 'register') {
       exit();
     }
   }
+}
+
+//- - - - - - - - - - - - - - - - - - - - L O G O U T - - - - - - - - - - - - - - - - - - - - -//
+
+else if (isset($_POST['action']) && $_POST['action'] == 'logout') {
+
+  session_destroy();
+  
+  header("Location: {$config['site_url']}");
+  exit();
 }
 else {
   header("Location: {$config['site_url']}/auth.php");
