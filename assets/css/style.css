@@ -95,18 +95,17 @@ main {
   text-align: center;
 }
 
-.header--1, .header--2, .header--3 {
+.about--header {
   border-radius: 69px;
   background: #031745;
   box-shadow:  22px 22px 44px #020f2c, -22px -22px 44px #041f5e;
   width: calc((100% / 3) - 25px);
 }
 
-.text--1, .text--2, .text--3 {
+.about--text {
   padding: 30px;
   border-radius: 69px;
-background: #041d57;
-box-shadow: inset 27px 27px 54px #031540,
-            inset -27px -27px 54px #05256e;
+  background: #041d57;
+  box-shadow: inset 27px 27px 54px #031540, inset -27px -27px 54px #05256e;
   width: calc((100% / 3) - 35px)
 }
