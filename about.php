@@ -1,12 +1,14 @@
 <?php
 
+if (!defined('SECURE_BOOT')) define('SECURE_BOOT', true);
+
 define('PAGE_TITLE', 'O firmie');
 define('PAGE_NEEDS_AUTHORIZATION', false);
 
 require_once "includes/init.php";
 include_once "views/header.php";
 
-include "views/navs/index-nav.php"; ?>
+?>
 
 <div class="info">
     <div class="info--content">
