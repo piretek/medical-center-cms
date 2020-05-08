@@ -6,6 +6,12 @@ define('PAGE_TITLE', 'Stwórz konto pacjenta');
 define('PAGE_NEEDS_AUTHORIZATION', true);
 
 require_once "includes/init.php";
+
+if (IS_PATIENT) {
+  header('Location: user-reservations.php');
+  exit;
+}
+
 include_once "views/header.php"; ?>
 
 <main>
@@ -13,6 +19,8 @@ include_once "views/header.php"; ?>
 
   <div class='paper'>
     <h1 class='paper-title'>Stwórz konto pacjenta</h1>
+    <p>Prosimy o wypełnienie danych dot. miejsca zamieszkania, nr PESEL i danych kontaktowych. Przetwarzanie tych danych osobowych jest wymagane do realizowania Pana/Pani wizyt w naszej przychodni.</p>
+    <?php include 'views/forms/add-patient.php'; ?>
   </div>
 </main>
 
