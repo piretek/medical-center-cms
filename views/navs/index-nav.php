@@ -4,7 +4,7 @@ if (!defined('SECURE_BOOT')) exit();
 
 $cards = [
   [
-    'url' => '/',
+    'url' => "{$config['site_url']}/",
     'name' => 'Strona główna',
   ],
   [
