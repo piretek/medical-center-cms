@@ -1,12 +1,12 @@
 <?php
 
+if (!defined('SECURE_BOOT')) define('SECURE_BOOT', true);
+
 define('PAGE_TITLE', 'Strona główna');
 define('PAGE_NEEDS_AUTHORIZATION', false);
 
 require_once "includes/init.php";
-include_once "views/header.php";
-
-include "views/navs/index-nav.php"; ?>
+include_once "views/header.php"; ?>
 
 <main>
   <h1>Strona główna</h1>

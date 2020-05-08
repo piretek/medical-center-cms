@@ -1,19 +1,33 @@
+<?php
+
+if (!defined('SECURE_BOOT')) exit();
+
+$cards = [
+  [
+    'url' => '/',
+    'name' => 'Strona główna',
+  ],
+  [
+    'url' => 'about.php',
+    'name' => 'O firmie'
+  ],
+  [
+    'url' => 'new-reservation.php',
+    'name' => 'Umów wizytę'
+  ],
+  [
+    'url' => 'contact.php',
+    'name' => 'Kontakt'
+  ],
+];
+
+?>
 <nav class='header-navigation'>
   <ul class='navigation'>
-    <li>
-      <a href='#'>Strona główna</a>
-    </li>
-    <li>
-      <a href='#'>O firmie</a>
-    </li>
-    <li>
-      <a href='#'>Umów wizytę</a>
-    </li>
-    <li>
-      <a href='#'>Kontakt</a>
-    </li>
-    <li>
-      <a href='#'>Zaloguj się</a>
-    </li>
+  <?php foreach($cards as $card) : ?>
+      <li>
+        <a href='<?= $card['url'] ?>'><?= $card['name'] ?></a>
+      </li>
+    <?php endforeach; ?>
   </ul>
 </nav>
