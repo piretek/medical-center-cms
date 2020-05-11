@@ -8,7 +8,7 @@ define('PAGE_NEEDS_AUTHORIZATION', true);
 require_once "includes/init.php";
 
 if (IS_PATIENT) {
-  header('Location: user-reservations.php');
+  header("Location: {$config['site-url']}/user-reservations.php");
   exit;
 }
 
