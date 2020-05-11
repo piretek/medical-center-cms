@@ -6,6 +6,7 @@ class Form {
 
   public $name = '';
   public $method = '';
+  public $action = '';
   public $classes = [];
 
   private $errorPrefix = null;
@@ -14,9 +15,10 @@ class Form {
   public $submitText = 'Wyślij';
 
 
-  public function __construct( $name, $method = 'POST', $additionalClasses = [] ) {
+  public function __construct( $name, $method = 'POST', $action = '', $additionalClasses = [] ) {
     $this->name = $name;
     $this->method = $method;
+    $this->action = $action;
     $this->classes = array_merge($this->classes, $additionalClasses);
 
     return $this;
@@ -92,7 +94,7 @@ class Form {
   }
 
   public function place($submitText = null) {
-    echo "<form id='{$this->name}' method='{$this->method}' ".(!empty($this->classes) ? "class='".implode(' ', $this->classes)."'" : '').">";
+    echo "<form id='{$this->name}' ".(!empty($this->method) ? "action='{$this->method}' " : "")."method='{$this->method}' ".(!empty($this->classes) ? "class='".implode(' ', $this->classes)."'" : '').">";
 
     foreach($this->inputs as $input) {
       echo $input;
