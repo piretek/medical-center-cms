@@ -45,14 +45,16 @@ if (isset($_POST['action']) && $_POST['action'] == 'login') {
 
       $_SESSION['user'] = (int) $user['id'];
 
-      if (IS_PATIENT) {  
+      require_once 'includes/init.php';
+
+      if (IS_PATIENT) {
 
         header("Location: {$config['site_url']}/new-reservation.php");
         exit();
-      
-      }  
+
+      }
       elseif (IS_DOCTOR || IS_ADMIN || IS_EMPLOYEE) {
-        
+
         header("Location: {$config['site_url']}/reservations.php");
         exit();
 
@@ -74,7 +76,7 @@ else if (isset($_POST['action']) && $_POST['action'] == 'register') {
     header("Location: {$config['site_url']}/auth.php");
     exit();
   }
-  
+
   $acceptedKeys = [
     'email',
     'password',
@@ -105,7 +107,7 @@ else if (isset($_POST['action']) && $_POST['action'] == 'register') {
       $_SESSION["register-form-error-{$key}"] = 'Pole nie może być puste';
     }
   }
-  
+
   if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $ok = false;
     $_SESSION["register-form-error-email"] = "Niepoprawny email";
@@ -165,7 +167,7 @@ else if (isset($_POST['action']) && $_POST['action'] == 'register') {
 else if (isset($_POST['action']) && $_POST['action'] == 'logout') {
 
   session_destroy();
-  
+
   header("Location: {$config['site_url']}");
   exit();
 }

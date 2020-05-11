@@ -6,6 +6,12 @@ define('PAGE_TITLE', 'Stwórz konto pacjenta');
 define('PAGE_NEEDS_AUTHORIZATION', true);
 
 require_once "includes/init.php";
+
+if (IS_PATIENT) {
+  header("Location: {$config['site-url']}/user-reservations.php");
+  exit;
+}
+
 include_once "views/header.php"; ?>
 
 <main>
