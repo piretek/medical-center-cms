@@ -208,6 +208,10 @@ button, input {
   width: 100%;
 }
 
+.input--container > span.input--error {
+  color: #F44336;
+}
+
 .input--container > input {
   background-color: #EBECF0;
   box-shadow: inset 2px 2px 5px #BABECC, inset -5px -5px 10px #FFF;
