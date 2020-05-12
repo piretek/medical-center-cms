@@ -106,6 +106,6 @@ else {
 
 // Check if page needs user to be logged in. If user is not authorized and page needs it, then redirect him to main url.
 if (defined('PAGE_NEEDS_AUTHORIZATION') && PAGE_NEEDS_AUTHORIZATION && !AUTHORIZED && basename($_SERVER['PHP_SELF']) !== 'index.php') {
-  header("Location: {$config['site_url']}/");
+  header("Location: {$config['site_url']}/auth.php");
   exit;
 }
