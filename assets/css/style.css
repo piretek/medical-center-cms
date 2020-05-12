@@ -139,13 +139,26 @@ header {
 }
 
 .footer {
-  position: absolute;
+  position: relative;
   bottom: 0;
   width: 100%;
   background-color: #0e3570a9;
   text-align: center;
   margin-top: 30px;
   font-size: 17px;
+  padding-top: 25px;
+}
+
+.footer img {
+  margin: 0 5px -5px 0;
+  max-width: 30px;
+  max-height: 30px;
+}
+
+.footer ul {
+  margin: 0;
+  list-style-type: none;
+  padding: 0;
 }
 
 .footer-h {
@@ -153,9 +166,24 @@ header {
   font-weight: 300;
 }
 
+.footers {
+  padding: 5px 5px 25px;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.footer-1, .footer-2 {
+  width: 50%;
+}
+
+.footer-2 h3 {
+  display: inline-block;
+}
+
 .footer-c {
   width: 100%;
-  padding: 10px 20px;
+  padding: 5px 10px;
   text-align: center;
   font-size: 11px;
 }
