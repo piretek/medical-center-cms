@@ -2,6 +2,13 @@
 
 if (!defined('SECURE_BOOT')) exit;
 
+/**
+ * Form Class
+ * Creates simple form via connected methods.
+ *
+ * @author Piotr Czarnecki <piretek@piretek.pro>
+ * @version 1.0
+ */
 class Form {
 
   public $name = '';
@@ -14,7 +21,15 @@ class Form {
 
   public $submitText = 'Wyślij';
 
-
+  /**
+   * Creates object with important data
+   *
+   * @param string $name Form ID
+   * @param string $method Submit HTTP method. Default: POST
+   * @param string $action Submit HTTP redirect. Default: empty string
+   * @param array $additionalClasses Additional form css classes
+   * @return object
+   */
   public function __construct( $name, $method = 'POST', $action = '', $additionalClasses = [] ) {
     $this->name = $name;
     $this->method = $method;
@@ -24,6 +39,18 @@ class Form {
     return $this;
   }
 
+  /**
+   * Genertes HTML input node
+   *
+   * @param string $id Input ID
+   * @param string $label Input label
+   * @param string $value Default input value. Default: empty string.
+   * @param string $placeholder Input placeholder text. Default: empty string
+   * @param string $type Input type. Default: text
+   * @param string|null $errorPrefix Error prefix. Default: null
+   * @param array $addtiotionalAttributes Additional input attributes
+   * @return void
+   */
   private function input( $id, $label, $value = '', $placeholder = '', $type = 'text', $errorPrefix = null, $addtiotionalAttributes = []) {
     global $_SESSION;
 
@@ -72,6 +99,16 @@ class Form {
     $this->inputs[] = $input;
   }
 
+  /**
+   * Generates text input field
+   *
+   * @param string $id Input ID
+   * @param string $label Input label
+   * @param string $value Default input value. Default: empty string.
+   * @param string $placeholder Input placeholder text. Default: empty string
+   * @param array $addtiotionalAttributes Additional input attributes
+   * @return object
+   */
   public function text($id, $label, $value = '', $placeholder = '', $addtiotionalAttributes = []) {
 
     $this->input($id, $label, $value, $placeholder, 'text', $this->errorPrefix, $addtiotionalAttributes);
@@ -79,6 +116,15 @@ class Form {
     return $this;
   }
 
+  /**
+   * Generates password input field
+   *
+   * @param string $id Input ID
+   * @param string $label Input label
+   * @param string $placeholder Input placeholder text. Default: empty string
+   * @param array $addtiotionalAttributes Additional input attributes
+   * @return object
+   */
   public function password($id, $label, $placeholder = '', $addtiotionalAttributes = []) {
 
     $this->input($id, $label, '', $placeholder, 'password', $this->errorPrefix, $addtiotionalAttributes);
@@ -86,6 +132,14 @@ class Form {
     return $this;
   }
 
+  /**
+   * Generates text input field
+   *
+   * @param string $id Input ID
+   * @param string $value Default input value. Default: empty string.
+   * @param array $addtiotionalAttributes Additional input attributes
+   * @return object
+   */
   public function hidden($id, $value = '', $addtiotionalAttributes = []) {
 
     $this->input($id, '', $value, '', 'hidden', $this->errorPrefix, $addtiotionalAttributes);
@@ -93,8 +147,14 @@ class Form {
     return $this;
   }
 
+  /**
+   * Generates and shows complete form
+   *
+   * @param string|null $submitText Text for submit button. Default: null
+   * @return void
+   */
   public function place($submitText = null) {
-    echo "<form id='{$this->name}' ".(!empty($this->method) ? "action='{$this->method}' " : "")."method='{$this->method}' ".(!empty($this->classes) ? "class='".implode(' ', $this->classes)."'" : '').">";
+    echo "<form id='{$this->name}' ".(!empty($this->action) ? "action='{$this->action}' " : "")."method='{$this->method}' ".(!empty($this->classes) ? "class='".implode(' ', $this->classes)."'" : '').">";
 
     foreach($this->inputs as $input) {
       echo $input;
