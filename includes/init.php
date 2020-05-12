@@ -44,19 +44,21 @@ date_default_timezone_set('Europe/Warsaw');
 // Authorize user
 if (isset($_SESSION['user']) && !empty($_SESSION['user'])) {
   // Check if user exists with provided ID in database
-  $userResult = $db->query(sprintf('SELECT users.id, users.email, users.firstname, users.lastname, roles.code as roleCode, roles.name as role FROM users INNER JOIN roles ON roles.id = users.role WHERE users.id = \'%s\'', $db->real_escape_string($_SESSION['user'])));
+  $userResult = $db->query(sprintf('SELECT users.id, roles.code as roleCode FROM users INNER JOIN roles ON roles.id = users.role WHERE users.id = \'%s\'', $db->real_escape_string($_SESSION['user'])));
 
   if ($userResult->num_rows != 0) {
     // Authorize this user, he exists in database
     define('AUTHORIZED', true);
-
+    
     // Now we need to get user permissions
 
     // Get user data
-    $authorizedUser = $userResult->fetch_assoc();
+    $user = $userResult->fetch_assoc();
+
+    $authorizedUser = new User($user['id']);
 
     // Fetch all existing roles
-    $userRole = $authorizedUser['roleCode'];
+    $userRole = $user['roleCode'];
 
     $roles = $db->query("SELECT * FROM roles")->fetch_all(MYSQLI_ASSOC);
     $roles = array_map(function($role) {
@@ -109,3 +111,5 @@ if (defined('PAGE_NEEDS_AUTHORIZATION') && PAGE_NEEDS_AUTHORIZATION && !AUTHORIZ
   header("Location: {$config['site_url']}/");
   exit;
 }
+
+unset($user);
