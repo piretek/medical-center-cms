@@ -229,16 +229,17 @@ button, input {
   box-shadow: inset 1px 1px 2px #BABECC, inset -1px -1px 2px #FFF;
 }
 
-.span.success,
-.span.error {
+span.success,
+span.error {
   font-size: 1.2em;
+  font-weight: 600;
 }
 
-.span.error {
+span.error {
   color: #F44336;
 }
 
-.span.success {
+span.success {
   color: #66BB6A;
 }
 
