@@ -36,6 +36,11 @@ $cards = [
     'permission' => IS_ADMIN
   ],
   [
+    'url' => 'settings.php',
+    'name' => 'Ustawienia systemu',
+    'permission' => IS_ADMIN
+  ],
+  [
     'url' => 'user-account.php',
     'name' => 'Twoje konto'
   ],
