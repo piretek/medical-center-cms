@@ -19,7 +19,7 @@ $schema[] = "
 CREATE TABLE IF NOT EXISTS `patients` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user` int(11) NOT NULL,
-  `pesel` int(11) NOT NULL,
+  `pesel` varchar(11) NOT NULL,
   `phone` int(9) NOT NULL,
   `street` varchar(30) CHARACTER SET utf8 NOT NULL,
   `house_no` varchar(10) CHARACTER SET utf8 NOT NULL,
