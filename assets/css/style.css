@@ -116,7 +116,7 @@ header {
 }
 
 .header-logo {
-  width: 35%;
+  width: 25%;
 }
 
 .header-logo h1,
@@ -135,7 +135,7 @@ header {
 .header-navs {
   display: flex;
   justify-content: space-between;
-  width: 65%;
+  width: 75%;
 }
 
 .person-icon {
