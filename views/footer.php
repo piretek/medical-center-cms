@@ -19,9 +19,9 @@ if (!defined('SECURE_BOOT')) exit();
         <div class="footer-2">
         <img src="./assets/images/warn.png"><h3>COVID-19</h3>
             <ul>
-              <li>Objawy</li>
-              <li>Profilaktyka</li>
-              <li>Leczenie</li>
+              <li><a href="covid-info.php#sympt">Objawy</a></li>
+              <li><a href="covid-info.php#prev">Profilaktyka</a></li>
+              <li><a href="covid-info.php#cure">Leczenie</a></li>
             </ul>
         </div>  
       </div>
