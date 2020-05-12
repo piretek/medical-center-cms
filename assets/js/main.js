@@ -3,7 +3,6 @@ window.addEventListener('load', function() {
 
   // Cards code
   const cardsContainers = document.querySelectorAll('.cards')
-  console.log(cardsContainers)
   cardsContainers.forEach((cardsContainer) => {
     const tabs = cardsContainer.querySelectorAll('.cards-tabs--tab')
     const sections = cardsContainer.querySelectorAll('.cards-sections--section')
@@ -19,7 +18,6 @@ window.addEventListener('load', function() {
           section.classList.remove('active')
 
           const toggledSection = cardsContainer.querySelector('.cards-sections--section#' + targetSection)
-          console.log(toggledSection)
           toggledSection.classList.add('active')
         })
       })

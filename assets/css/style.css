@@ -238,7 +238,8 @@ button, input {
   color: #66BB6A;
 }
 
-form > button {
+form > button,
+button {
   background: #68EBB8;
   color: #2D2D2D;
   font-weight: bold;
@@ -252,7 +253,8 @@ form > button {
   transition: .5s ease-in;
 }
 
-form > button:active {
+form > button:active,
+button:active {
   box-shadow: inset 4px 4px 9px #58c89c, inset -4px -4px 9px #78ffd4;
 }
 
@@ -319,4 +321,38 @@ form.as-anchor > button:hover {
 
 .cards .cards-sections > .cards-sections--section.active {
   display: block;
+}
+
+table {
+  width: 100%;
+  overflow-x: auto;
+  border-spacing: 0;
+}
+
+table td {
+  padding: 8px 5px;
+  transition: .1s ease-in;
+}
+
+table th {
+  border-bottom: 1px solid #E0E0E0;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+table tr:hover td {
+  background-color: rgba(0,0,0,.08);
+}
+
+td.no-entries {
+  text-align: center;
+}
+
+button {
+  box-shadow:  2px 2px 5px #58c89c, -2px -2px 5px #78ffd4;
+  padding: 5px 20px;
+  cursor: pointer;
+  font-weight: 500;
+  border-radius: 20px;
+  margin: 10px 0;
 }
