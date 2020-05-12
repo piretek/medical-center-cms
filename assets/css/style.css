@@ -138,6 +138,34 @@ header {
   width: 65%;
 }
 
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: #0e3570a9;
+  text-align: center;
+  margin-top: 30px;
+  font-size: 17px;
+}
+
+.footer-h {
+  padding: 10px 20px;
+  font-weight: 300;
+}
+
+.footer-c {
+  width: 100%;
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 11px;
+}
+
+.footer hr {
+  width: 30%;
+  border-width: 1px;
+  border-color: #ffffff44;
+}
+
 .person-icon {
   margin-bottom: -3px;
 }
