@@ -41,15 +41,8 @@ include_once 'views/header.php';
   <div class="column col-30a">
     <h1>Nie masz konta? Zarejestruj się</h1>
 
-    <?php if (isset($_SESSION['auth-error'])) : ?>
-      <span class='error'>Błąd: <?= $_SESSION['auth-error'] ?></span>
-      <?php unset($_SESSION['auth-error']); ?>
-    <?php endif; ?>
-
-    <?php if (isset($_SESSION['auth-success'])) : ?>
-      <span class='success'><?= $_SESSION['auth-success'] ?></span>
-      <?php unset($_SESSION['auth-success']); ?>
-    <?php endif; ?>
+    <?php notification('auth-error', 'error'); ?>
+    <?php notification('auth-success', 'success'); ?>
 
     <form action = "login.php" method="POST">
       <input type="hidden" name="action" value="register">

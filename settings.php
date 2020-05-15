@@ -17,8 +17,8 @@ if (isset($_POST['type'])) {
   $ok = true;
 
   switch ($_POST['type']) {
-    case "rooms-add" :
-    case "specializations-add" :
+    case "add-room" :
+    case "add-specialization" :
 
       if ($section == 'rooms') {
         if (strlen($_POST['value']) > 10) {
@@ -39,27 +39,33 @@ if (isset($_POST['type'])) {
           $db->real_escape_string(htmlentities($_POST['value'], ENT_QUOTES, 'UTF-8'))
         ));
 
-        echo json_encode([
-          'success' => $successful
-        ]);
+        if ($successful) {
+          $_SESSION['success'] = 'Dodano';
+          header("Location: {$config['site_address']}/settings.php");
+          exit;
+        }
+        else {
+          $_SESSION['error'] = 'Błąd podczas wykonywania zapytania do bazy danych.';
+          header("Location: {$config['site_address']}/settings.php?action=".$_POST['type']);
+          exit;
+        }
       }
       else {
-        echo json_encode([
-          'success' => false,
-          'errors' => $errors
-        ]);
+        $_SESSION['error'] = 'Popraw wszelkie błędy';
+        header("Location: {$config['site_address']}/settings.php?action=".$_POST['type']);
+        exit;
       }
 
     break;
 
-    case "rooms-edit" :
-    case "specializations-edit" :
+    case "edit-room" :
+    case "edit-specialization" :
 
       echo 'edited - '.var_export($_POST, true);
     break;
 
-    case "rooms-remove" :
-    case "specializations-remove" :
+    case "remove-room" :
+    case "remove-specialization" :
 
       echo 'removed - '.var_export($_POST, true);
     break;
@@ -74,80 +80,102 @@ include_once "views/header.php"; ?>
 
   <div class='paper'>
     <h1 class='paper-title'>Ustawienia systemu</h1>
-    <div class='cards'>
-      <div class='cards-tabs'>
-        <div for='specializations' class='cards-tabs--tab'>Specjalizacje</div>
-        <div for='rooms' class='cards-tabs--tab'>Gabinety</div>
-      </div>
-      <div class='cards-sections'>
-        <div id='specializations' class='cards-sections--section'>
-          <button class='add'>Dodaj nową specjalizację</button>
-          <table>
-            <tr>
-              <th>Nazwa</th>
-              <th>Akcje</th>
-            </tr>
-            <?php
+    <?php
 
-            $rooms = $db->query("SELECT * FROM specializations");
-            if ($rooms->num_rows != 0) : ?>
+    if (isset($_GET['action']) && !empty(isset($_GET['action']))) :
+      switch($_GET['action']) {
 
-            <?php while($room = $rooms->fetch_assoc()) : ?>
+        case 'add-room' :
+        case 'add-specialization' :
+        case 'edit-room' :
+        case 'edit-specialization' :
+          list($action, $type) = explode('-', $_GET['action']);
+
+
+
+          break;
+
+      }
+    else : ?>
+      <div class='cards'>
+        <div class='cards-tabs'>
+          <div for='specializations' class='cards-tabs--tab'>Specjalizacje</div>
+          <div for='rooms' class='cards-tabs--tab'>Gabinety</div>
+        </div>
+
+        <?php notification('success', 'success'); ?>
+        <?php notification('error', 'error'); ?>
+
+        <div class='cards-sections'>
+          <div id='specializations' class='cards-sections--section'>
+            <a href='settings.php?action=add-specialization'><button class='add'>Dodaj nową specjalizację</button></a>
+            <table>
+              <tr>
+                <th>Nazwa</th>
+                <th>Akcje</th>
+              </tr>
+              <?php
+
+              $rooms = $db->query("SELECT * FROM specializations");
+              if ($rooms->num_rows != 0) : ?>
+
+              <?php while($room = $rooms->fetch_assoc()) : ?>
+
+                <tr>
+                  <td><?= $room['number'] ?></td>
+                  <td>
+                    <a href='settings.php?action=edit-specialization'>Edytuj</a> | <a href='#'>Usuń</a>
+                  </td>
+                </tr>
+
+              <?php endwhile; ?>
+
+              <?php else : ?>
 
               <tr>
-                <td><?= $room['number'] ?></td>
-                <td>
-                  <a data-id='<?= $room['id'] ?>' class='edit' href='#'>Edytuj</a> | <a data-id='<?= $room['id'] ?>' class='remove' href='#'>Usuń</a>
-                </td>
+                <td class='no-entries' colspan='2'>Brak wyników</td>
               </tr>
 
-            <?php endwhile; ?>
+              <?php endif; ?>
+            </table>
+          </div>
+          <div id='rooms' class='cards-sections--section'>
+            <a href='settings.php?action=add-room'><button class='add'>Dodaj nowy gabinet</button></a>
+            <table>
+              <tr>
+                <th>Numer</th>
+                <th>Akcje</th>
+              </tr>
+              <?php
 
-            <?php else : ?>
+              $rooms = $db->query("SELECT * FROM rooms");
+              if ($rooms->num_rows != 0) : ?>
 
-            <tr>
-              <td class='no-entries' colspan='2'>Brak wyników</td>
-            </tr>
+              <?php while($room = $rooms->fetch_assoc()) : ?>
 
-            <?php endif; ?>
-          </table>
-        </div>
-        <div id='rooms' class='cards-sections--section'>
-          <button class='add'>Dodaj nowy gabinet</button>
-          <table>
-            <tr>
-              <th>Numer</th>
-              <th>Akcje</th>
-            </tr>
-            <?php
+                <tr>
+                  <td><?= $room['number'] ?></td>
+                  <td>
+                    <a href='settings.php?action=edit-room'>Edytuj</a> | <a href='#'>Usuń</a>
+                    <a href='settings.php?action=edit-room'>Edytuj</a> | <a href='#'>Usuń</a>
+                  </td>
+                </tr>
 
-            $rooms = $db->query("SELECT * FROM rooms");
-            if ($rooms->num_rows != 0) : ?>
+              <?php endwhile; ?>
 
-            <?php while($room = $rooms->fetch_assoc()) : ?>
+              <?php else : ?>
 
               <tr>
-                <td><?= $room['number'] ?></td>
-                <td>
-                  <a data-id='<?= $room['id'] ?>' class='edit' href='#'>Edytuj</a> | <a data-id='<?= $room['id'] ?>' class='remove' href='#'>Usuń</a>
-                </td>
+                <td class='no-entries' colspan='2'>Brak wyników</td>
               </tr>
 
-            <?php endwhile; ?>
-
-            <?php else : ?>
-
-            <tr>
-              <td class='no-entries' colspan='2'>Brak wyników</td>
-            </tr>
-
-            <?php endif; ?>
-          </table>
+              <?php endif; ?>
+            </table>
+          </div>
         </div>
       </div>
-    </div>
+    <?php endif; ?>
   </div>
 </main>
-<script src='assets/js/system-settings.js'></script>
 
 <?php include_once "views/footer.php"; ?>

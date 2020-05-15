@@ -27,6 +27,8 @@ $db = create_database_connection( $config['db'] );
 
 date_default_timezone_set('Europe/Warsaw');
 
+require_once 'functions/notification.php';
+
 if (isset($_SESSION['user']) && !empty($_SESSION['user'])) {
   $userResult = $db->query(sprintf('SELECT users.id, users.email, users.firstname, users.lastname, roles.code as roleCode, roles.name as role FROM users INNER JOIN roles ON roles.id = users.role WHERE users.id = \'%s\'', $db->real_escape_string($_SESSION['user'])));
 
