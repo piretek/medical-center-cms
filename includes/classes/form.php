@@ -34,6 +34,11 @@ class Form {
     $this->name = $name;
     $this->method = $method;
     $this->action = $action;
+
+    if (is_string($additionalClasses)) {
+      $additionalClasses = [ $additionalClasses ];
+    }
+
     $this->classes = array_merge($this->classes, $additionalClasses);
 
     return $this;
@@ -142,7 +147,12 @@ class Form {
    */
   public function hidden($id, $value = '', $addtiotionalAttributes = []) {
 
-    $this->input($id, '', $value, '', 'hidden', $this->errorPrefix, $addtiotionalAttributes);
+    $attributesText = '';
+    foreach($addtiotionalAttributes as $attribute => $value) {
+      $attributesText .= "{$attribute}='{$value}' ";
+    }
+
+    $this->inputs[] = "<input type='hidden' name='{$id}' value='{$value}' {$attributesText} />";
 
     return $this;
   }

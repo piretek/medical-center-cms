@@ -13,64 +13,126 @@ if (!IS_ADMIN) {
 }
 
 if (isset($_POST['type'])) {
-  list($section, $action) = explode('-', $_POST['type']);
+  list($action, $type) = explode('-', $_POST['type']);
   $ok = true;
 
   switch ($_POST['type']) {
     case "add-room" :
     case "add-specialization" :
+    case "edit-room" :
+    case "edit-specialization" :
 
-      if ($section == 'rooms') {
-        if (strlen($_POST['value']) > 10) {
+      if (empty($_POST['name'])) {
+        $ok = false;
+        $_SESSION['settings-form-error-name'] = 'Pole nie może być puste.';
+      }
+
+      if ($action == 'edit' && (!isset($_POST['id']) || empty($_POST['id']))) {
+        $ok = false;
+      }
+
+      if ($type == 'room') {
+        if (strlen($_POST['name']) > 10) {
           $ok = false;
-          $errors['value'] = 'Numer pokoju może mieć maks. 10 znaków.';
+          $_SESSION['settings-form-error-name'] = 'Numer pokoju może mieć maks. 10 znaków.';
         }
       }
-      else if ($section == 'specializations') {
-        if (strlen($_POST['value']) > 20) {
+      else if ($type == 'specialization') {
+        if (strlen($_POST['name']) > 20) {
           $ok = false;
-          $errors['value'] = 'Nazwa specjalizacji może mieć maks. 20 znaków.';
+          $_SESSION['settings-form-error-name'] = 'Nazwa specjalizacji może mieć maks. 20 znaków.';
         }
       }
 
       if ($ok) {
-        $successful = $db->query(sprintf("INSERT INTO %s VALUES (NULL, '%s')",
-          $db->real_escape_string($action),
-          $db->real_escape_string(htmlentities($_POST['value'], ENT_QUOTES, 'UTF-8'))
-        ));
+        if ($action == 'add') {
+          $query = sprintf("INSERT INTO %s VALUES (NULL, '%s')",
+            $db->real_escape_string($type).'s',
+            $db->real_escape_string(htmlentities($_POST['name'], ENT_QUOTES, 'UTF-8'))
+          );
+        }
+        else if ($action == 'edit') {
+          $query = sprintf("UPDATE %s SET %s = '%s' WHERE id = '%s'",
+            $db->real_escape_string($type).'s',
+            $db->real_escape_string(($type == 'room' ? 'number' : 'name')),
+            $db->real_escape_string(htmlentities($_POST['name'], ENT_QUOTES, 'UTF-8')),
+            $db->real_escape_string($_POST['id'])
+          );
+        }
+
+        $successful = $db->query($query);
 
         if ($successful) {
-          $_SESSION['success'] = 'Dodano';
-          header("Location: {$config['site_address']}/settings.php");
+          $_SESSION['success'] = $action == 'add' ? 'Dodano' : 'Zmieniono';
+          header("Location: {$config['site_url']}/settings.php#{$type}s");
           exit;
         }
         else {
           $_SESSION['error'] = 'Błąd podczas wykonywania zapytania do bazy danych.';
-          header("Location: {$config['site_address']}/settings.php?action=".$_POST['type']);
+          header("Location: {$config['site_url']}/settings.php?action={$_POST['type']}&id={$_POST['id']}");
           exit;
         }
       }
       else {
         $_SESSION['error'] = 'Popraw wszelkie błędy';
-        header("Location: {$config['site_address']}/settings.php?action=".$_POST['type']);
+        header("Location: {$config['site_url']}/settings.php?action={$_POST['type']}&id={$_POST['id']}");
         exit;
       }
 
-    break;
-
-    case "edit-room" :
-    case "edit-specialization" :
-
-      echo 'edited - '.var_export($_POST, true);
-    break;
+      break;
 
     case "remove-room" :
     case "remove-specialization" :
 
-      echo 'removed - '.var_export($_POST, true);
-    break;
+      if (!isset($_POST['id']) || empty($_POST['id'])) {
+        $_SESSION['error'] = 'Błąd usuwania.';
+        header("Location: {$config['site_url']}/settings.php#{$type}s");
+        exit;
+      }
+
+      $query = sprintf("DELETE FROM %s WHERE id = '%s'",
+        $db->real_escape_string($type).'s',
+        $db->real_escape_string($_POST['id'])
+      );
+
+      $successful = $db->query($query);
+
+      if ($successful) {
+        $_SESSION['success'] = 'Usunięto';
+        header("Location: {$config['site_url']}/settings.php#{$type}s");
+        exit;
+      }
+      else {
+        $_SESSION['error'] = 'Błąd podczas wykonywania zapytania do bazy danych.';
+        header("Location: {$config['site_url']}/settings.php#{$type}s");
+        exit;
+      }
+
+      break;
   }
   exit;
+}
+
+if (isset($_GET['action']) && !empty($_GET['action'])) {
+  list($action, $type) = explode('-', $_GET['action']);
+
+  if ($action == 'edit' && (!isset($_GET['id']) || (empty($_GET['id']) || !is_numeric($_GET['id'])))) {
+    header("Location: {$config['site_url']}/settings.php");
+    exit;
+  }
+  else if ($action == 'edit') {
+    $result = $db->query(sprintf("SELECT * FROM %s WHERE id = '%d'",
+      $db->real_escape_string($type.'s'),
+      $db->real_escape_string($_GET['id'])
+    ));
+
+    if ($result->num_rows == 0) {
+      header("Location: {$config['site_url']}/settings.php");
+      exit;
+    }
+
+    $editForm = $result->fetch_assoc();
+  }
 }
 
 include_once "views/header.php"; ?>
@@ -79,19 +141,53 @@ include_once "views/header.php"; ?>
   <?php include_once 'views/navs/dashboard-nav.php' ?>
 
   <div class='paper'>
-    <h1 class='paper-title'>Ustawienia systemu</h1>
+    <h1 class='paper-title'>
+      <?php
+
+      if (isset($action) && $action == 'edit') {
+        echo 'Edytuj '.($type == 'room' ? 'gabinet' : 'specjalizację');
+      }
+      elseif (isset($action) && $action == 'add') {
+        echo 'Dodaj '.($type == 'room' ? 'gabinet' : 'specjalizację');
+      }
+      else {
+        echo 'Ustawienia systemu';
+      }
+
+      ?>
+    </h1>
+
     <?php
 
-    if (isset($_GET['action']) && !empty(isset($_GET['action']))) :
+    if (isset($_GET['action']) && !empty($_GET['action'])) :
       switch($_GET['action']) {
 
         case 'add-room' :
         case 'add-specialization' :
         case 'edit-room' :
         case 'edit-specialization' :
-          list($action, $type) = explode('-', $_GET['action']);
 
+          notification('error', 'error');
 
+          $form = new Form($_GET['action']);
+
+          $form->hidden('type', $_GET['action']);
+
+          if ($action == 'edit') $form->hidden('id', $_GET['id']);
+
+          $form->text(
+            'name',
+            ($type == 'room'
+              ? 'Numer pokoju'
+              : ($type == 'specialization'
+                ? 'Nazwa specjalizacji'
+                : 'Nazwa')),
+            ($action == 'edit'
+              ? $editForm[$type == 'room' ? 'number' : 'name']
+              : '')
+          );
+
+          $form->place('Dodaj');
 
           break;
 
@@ -116,15 +212,15 @@ include_once "views/header.php"; ?>
               </tr>
               <?php
 
-              $rooms = $db->query("SELECT * FROM specializations");
-              if ($rooms->num_rows != 0) : ?>
+              $specializations = $db->query("SELECT * FROM specializations ORDER BY name");
+              if ($specializations->num_rows != 0) : ?>
 
-              <?php while($room = $rooms->fetch_assoc()) : ?>
+              <?php while($specialization = $specializations->fetch_assoc()) : ?>
 
                 <tr>
-                  <td><?= $room['number'] ?></td>
+                  <td><?= $specialization['name'] ?></td>
                   <td>
-                    <a href='settings.php?action=edit-specialization'>Edytuj</a> | <a href='#'>Usuń</a>
+                    <a class='action-anchor' href='settings.php?action=edit-specialization&id=<?= $specialization['id'] ?>'>Edytuj</a> | <?php $r = new Form('remove-specialization-'.$specialization['id'], 'POST', '', 'as-anchor remove-prompt'); $r->hidden('type', 'remove-specialization')->hidden('id', $specialization['id'])->place('Usuń'); ?>
                   </td>
                 </tr>
 
@@ -148,7 +244,7 @@ include_once "views/header.php"; ?>
               </tr>
               <?php
 
-              $rooms = $db->query("SELECT * FROM rooms");
+              $rooms = $db->query("SELECT * FROM rooms ORDER BY number");
               if ($rooms->num_rows != 0) : ?>
 
               <?php while($room = $rooms->fetch_assoc()) : ?>
@@ -156,8 +252,7 @@ include_once "views/header.php"; ?>
                 <tr>
                   <td><?= $room['number'] ?></td>
                   <td>
-                    <a href='settings.php?action=edit-room'>Edytuj</a> | <a href='#'>Usuń</a>
-                    <a href='settings.php?action=edit-room'>Edytuj</a> | <a href='#'>Usuń</a>
+                    <a class='action-anchor' href='settings.php?action=edit-room&id=<?= $room['id'] ?>'>Edytuj</a> | <?php $r = new Form('remove-room-'.$room['id'], 'POST', '', 'as-anchor remove-prompt'); $r->hidden('type', 'remove-room')->hidden('id', $room['id'])->place('Usuń'); ?>
                   </td>
                 </tr>
 
