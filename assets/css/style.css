@@ -116,7 +116,7 @@ header {
 }
 
 .header-logo {
-  width: 35%;
+  width: 25%;
 }
 
 .header-logo h1,
@@ -135,7 +135,7 @@ header {
 .header-navs {
   display: flex;
   justify-content: space-between;
-  width: 65%;
+  width: 75%;
 }
 
 .person-icon {
@@ -148,7 +148,7 @@ main {
 }
 
 div.paper {
-  padding: 10px 50px;
+  padding: 10px 50px 20px;
   background-color: #FFF;
   color: #424656;
   border-radius: 15px 0 15px 0;
@@ -208,6 +208,10 @@ button, input {
   width: 100%;
 }
 
+.input--container > span.input--error {
+  color: #F44336;
+}
+
 .input--container > input {
   background-color: #EBECF0;
   box-shadow: inset 2px 2px 5px #BABECC, inset -5px -5px 10px #FFF;
@@ -225,20 +229,21 @@ button, input {
   box-shadow: inset 1px 1px 2px #BABECC, inset -1px -1px 2px #FFF;
 }
 
-.span.success,
-.span.error {
+span.success,
+span.error {
   font-size: 1.2em;
+  font-weight: 600;
 }
 
-.span.error {
+span.error {
   color: #F44336;
 }
 
-.span.success {
+span.success {
   color: #66BB6A;
 }
 
-form > button,
+form button,
 button {
   background: #68EBB8;
   color: #2D2D2D;
@@ -253,7 +258,7 @@ button {
   transition: .5s ease-in;
 }
 
-form > button:active,
+form button:active,
 button:active {
   box-shadow: inset 4px 4px 9px #58c89c, inset -4px -4px 9px #78ffd4;
 }

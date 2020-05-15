@@ -16,9 +16,9 @@ include_once 'views/header.php';
   <div class="column col-30">
     <h1>Zaloguj się</h1>
 
-    <?php if (isset($_SESSION['auth-error'])) : ?>
-      <span class='error'>Błąd: <?= $_SESSION['auth-error'] ?></span>
-      <?php unset($_SESSION['auth-error']); ?>
+    <?php if (isset($_SESSION['login-error'])) : ?>
+      <span class='error'>Błąd: <?= $_SESSION['login-error'] ?></span>
+      <?php unset($_SESSION['login-error']); ?>
     <?php endif; ?>
 
     <form action="login.php" method="POST">
