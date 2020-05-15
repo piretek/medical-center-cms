@@ -196,7 +196,7 @@ nav ul.dashboard li a.active {
   padding: 8px 0;
 }
 
-button, input {
+button, input, select {
   border: 0;
   outline: 0;
   font-size: 16px;
@@ -212,7 +212,8 @@ button, input {
   color: #F44336;
 }
 
-.input--container > input {
+.input--container > input,
+.input--container > select {
   background-color: #EBECF0;
   box-shadow: inset 2px 2px 5px #BABECC, inset -5px -5px 10px #FFF;
   width: 100%;
@@ -223,6 +224,10 @@ button, input {
   transition: all 0.2s ease-in-out;
   appearance: none;
   -webkit-appearance: none;
+}
+
+.input--container > select {
+  font-family: inherit;
 }
 
 .input--container > input:focus {

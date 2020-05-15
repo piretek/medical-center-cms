@@ -74,14 +74,14 @@ if (isset($_SESSION['user']) && !empty($_SESSION['user'])) {
         if ($role == 'PATIENT' && $hasPatientInfo) {
           define($ruleName, true);
         }
-        else if (!defined($ruleName)) {
+        else if ($role == 'PATIENT' && !defined($ruleName)) {
           define($ruleName, false);
         }
 
         if ($role == 'DOCTOR' && $hasDoctorInfo) {
           define($ruleName, true);
         }
-        else if (!defined($ruleName)) {
+        else if ($role == 'DOCTOR' && !defined($ruleName)) {
           define($ruleName, false);
         }
       }

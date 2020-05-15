@@ -2,9 +2,9 @@
 
 if (!defined('SECURE_BOOT')) exit;
 
-$addPatientForm = new Form('create-patient');
+$editPatientForm = new Form('edit-patient');
 
-$addPatientForm->hidden('type', 'create-patient')
+$editPatientForm->hidden('type', 'edit-patient')
   ->text('pesel', 'PESEL:')
   ->text('phone', 'Telefon:')
   ->text('street', 'Ulica:')

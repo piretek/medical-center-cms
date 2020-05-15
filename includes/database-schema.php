@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS `patients` (
   `street` varchar(30) CHARACTER SET utf8 NOT NULL,
   `house_no` varchar(10) CHARACTER SET utf8 NOT NULL,
   `city` varchar(20) CHARACTER SET utf8 NOT NULL,
+  `postcode` varchar(6) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`id`),
   KEY `patients_users` (`user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
