@@ -64,14 +64,20 @@ if (isset($_POST['type']) && $_POST['type'] == 'create-patient') {
     $_SESSION['create-patient-account-form-error-city'] = 'Miasto może mieć maks. 20 znaków.';
   }
 
+  if (!preg_match('/^[0-9]{2}\-[0-9]{3}$/', $post['postcode'])) {
+    $ok = false;
+    $_SESSION['create-patient-account-form-error-postcode'] = 'Kod musi być w formacie XX-XXX.';
+  }
+
   if ($ok) {
-    $insertQuery = sprintf("INSERT INTO patients VALUES (NULL, '%d', '%s', '%s', '%s', '%s', '%s')",
+    $insertQuery = sprintf("INSERT INTO patients VALUES (NULL, '%d', '%s', '%s', '%s', '%s', '%s', '%s')",
       $_SESSION['user'],
       $db->real_escape_string($pesel->get()),
       $db->real_escape_string($post['phone']),
       $db->real_escape_string($post['street']),
       $db->real_escape_string($post['house_no']),
       $db->real_escape_string($post['city']),
+      $db->real_escape_string($post['postcode']),
     );
 
     $successful = $db->query($insertQuery);

@@ -39,10 +39,12 @@ include_once "views/header.php"; ?>
         <?php
 
         if (IS_PATIENT) :
+          echo "<h2>Ustawienia konta pacjenta</h2>";
           require_once 'views/forms/edit-patient.php';
         endif;
 
         if (IS_DOCTOR) :
+          echo "<h2>Ustawienia konta lekarza</h2>";
           define('DOCTOR_FORM_ID', $_SESSION['user']);
           require_once 'views/forms/doctor.php';
         endif;
