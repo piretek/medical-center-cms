@@ -17,8 +17,54 @@ if (isset($_POST['type'])) {
 
       break;
 
-    case 'add-doctor' :
-    case 'edit-doctor' :
+    case 'doctor' :
+
+      $ok = true;
+
+      $checkedKeys = ['specialization', 'degree'];
+      foreach($checkedKeys as $key) {
+        if (!array_key_exists($key, $_POST) || empty($_POST[$key])) {
+          $ok = false;
+          $_SESSION['user-account-doctor-form-error-'.$key] = 'Pole nie może być puste.';
+        }
+      }
+
+      if ($ok) {
+        $doctorExists = $db->query(sprintf("SELECT * FROM doctors WHERE id = '%d'", $db->real_escape_string($_POST['id'])))->num_rows == 0 ? false : true;
+
+        if ($doctorExists) {
+          $query = sprintf('UPDATE doctors SET specialization = \'%d\', degree = \'%s\' WHERE user = \'%d\'',
+            $db->real_escape_string($_POST['specialization']),
+            $db->real_escape_string(htmlentities($_POST['degree'], ENT_QUOTES, "UTF-8")),
+            $db->real_escape_string($_POST['id'])
+          );
+        }
+        else {
+          $query = sprintf("INSERT INTO doctors VALUES (NULL, '%d', '%d', '%s')",
+            $db->real_escape_string($_POST['id']),
+            $db->real_escape_string($_POST['specialization']),
+            $db->real_escape_string(htmlentities($_POST['degree'], ENT_QUOTES, "UTF-8"))
+          );
+        }
+
+        $successful = $db->query($query);
+
+        if ($successful) {
+          $_SESSION['success'] = $doctorExists ? 'Zmieniono!' : 'Stworzono!';
+          header("Location: {$config['site_url']}/user-account.php");
+          exit;
+        }
+        else {
+          $_SESSION['error'] = 'Błąd zapytania do bazy danych. Skontaktuj się z administratorem.';
+          header("Location: {$config['site_url']}/user-account.php");
+          exit;
+        }
+      }
+      else {
+        $_SESSION['error'] = 'Popraw wszystkie pola';
+        header("Location: {$config['site_url']}/user-account.php");
+        exit;
+      }
 
       break;
   }
@@ -36,6 +82,10 @@ include_once "views/header.php"; ?>
 
   <div class='paper'>
     <h1 class='paper-title'>Twoje konto</h1>
+
+    <?php notification('success', 'success'); ?>
+    <?php notification('error', 'error'); ?>
+
     <div class='columns'>
       <div class="column col-50">
         <?php
