@@ -27,7 +27,7 @@ if (isset($_POST['type']) && $_POST['type'] == 'create-patient') {
   foreach($requiredFields as $field) {
     if (!array_key_exists($field, $_POST) || empty($_POST[$field])) {
       $ok = false;
-      $_SESSION['create-patient-account-form-error-'.$field] = 'To pole nie może być puste.';
+      $_SESSION['create-patient-account-create-patient-form-error-'.$field] = 'To pole nie może być puste.';
     }
   }
 
@@ -41,32 +41,32 @@ if (isset($_POST['type']) && $_POST['type'] == 'create-patient') {
   }
   catch(PESEL_Exception $peselErr) {
     $ok = false;
-    $_SESSION['create-patient-account-form-error-pesel'] = $peselErr->getMessage();
+    $_SESSION['create-patient-account-create-patient-form-error-pesel'] = $peselErr->getMessage();
   }
 
   if (strlen($post['phone']) != 9 || !is_numeric($post['phone'])) {
     $ok = false;
-    $_SESSION['create-patient-account-form-error-phone'] = 'Niepoprawny format numeru telefonu';
+    $_SESSION['create-patient-account-create-patient-form-error-phone'] = 'Niepoprawny format numeru telefonu';
   }
 
   if (strlen($post['street']) > 30) {
     $ok = false;
-    $_SESSION['create-patient-account-form-error-street'] = 'Ulica może mieć maks. 30 znaków.';
+    $_SESSION['create-patient-account-create-patient-form-error-street'] = 'Ulica może mieć maks. 30 znaków.';
   }
 
   if (strlen($post['house_no']) > 10) {
     $ok = false;
-    $_SESSION['create-patient-account-form-error-street'] = 'Numer domu i mieszkania może mieć maks. 10 znaków.';
+    $_SESSION['create-patient-account-create-patient-form-error-street'] = 'Numer domu i mieszkania może mieć maks. 10 znaków.';
   }
 
   if (strlen($post['city']) > 20) {
     $ok = false;
-    $_SESSION['create-patient-account-form-error-city'] = 'Miasto może mieć maks. 20 znaków.';
+    $_SESSION['create-patient-account-create-patient-form-error-city'] = 'Miasto może mieć maks. 20 znaków.';
   }
 
   if (!preg_match('/^[0-9]{2}\-[0-9]{3}$/', $post['postcode'])) {
     $ok = false;
-    $_SESSION['create-patient-account-form-error-postcode'] = 'Kod musi być w formacie XX-XXX.';
+    $_SESSION['create-patient-account-create-patient-form-error-postcode'] = 'Kod musi być w formacie XX-XXX.';
   }
 
   if ($ok) {

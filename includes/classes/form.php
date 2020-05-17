@@ -72,7 +72,7 @@ class Form {
       $attributesText .= "{$attribute}='{$attr}' ";
     }
 
-    if ($errorPrefix === null) $errorPrefix = pathinfo(__DIR__.$_SERVER['PHP_SELF'], PATHINFO_FILENAME);
+    if ($errorPrefix === null) $errorPrefix = pathinfo(__DIR__.$_SERVER['PHP_SELF'], PATHINFO_FILENAME).'-'.$this->name;
 
     $errField = $id;
 
