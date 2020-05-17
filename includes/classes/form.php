@@ -48,10 +48,10 @@ class Form {
    * @param string $placeholder Input placeholder text. Default: empty string
    * @param string $type Input type. Default: text
    * @param string|null $errorPrefix Error prefix. Default: null
-   * @param array $addtiotionalAttributes Additional input attributes
+   * @param array $additionalAttributes Additional input attributes
    * @return void
    */
-  private function input( $id, $label, $value = '', $placeholder = '', $type = 'text', $errorPrefix = null, $addtiotionalAttributes = []) {
+  private function input( $id, $label, $value = '', $placeholder = '', $type = 'text', $errorPrefix = null, $additionalAttributes = []) {
     global $_SESSION;
 
     $defaultAttributes = [
@@ -65,7 +65,7 @@ class Form {
       $defaultAttributes['value'] = $value;
     }
 
-    $attributes = array_merge($defaultAttributes, $addtiotionalAttributes);
+    $attributes = array_merge($defaultAttributes, $additionalAttributes);
 
     $attributesText = '';
     foreach($attributes as $attribute => $attr) {
@@ -123,12 +123,12 @@ class Form {
    * @param string $label Input label
    * @param string $value Default input value. Default: empty string.
    * @param string $placeholder Input placeholder text. Default: empty string
-   * @param array $addtiotionalAttributes Additional input attributes
+   * @param array $additionalAttributes Additional input attributes
    * @return object
    */
-  public function text($id, $label, $value = '', $placeholder = '', $addtiotionalAttributes = []) {
+  public function text($id, $label, $value = '', $placeholder = '', $additionalAttributes = []) {
 
-    $this->input($id, $label, $value, $placeholder, 'text', $this->errorPrefix, $addtiotionalAttributes);
+    $this->input($id, $label, $value, $placeholder, 'text', $this->errorPrefix, $additionalAttributes);
 
     return $this;
   }
@@ -140,12 +140,12 @@ class Form {
    * @param string $label Input label
    * @param string $value Default input value. Default: empty string.
    * @param string $placeholder Input placeholder text. Default: empty string
-   * @param array $addtiotionalAttributes Additional input attributes
+   * @param array $additionalAttributes Additional input attributes
    * @return object
    */
-  public function email($id, $label, $value = '', $placeholder = '', $addtiotionalAttributes = []) {
+  public function email($id, $label, $value = '', $placeholder = '', $additionalAttributes = []) {
 
-    $this->input($id, $label, $value, $placeholder, 'email', $this->errorPrefix, $addtiotionalAttributes);
+    $this->input($id, $label, $value, $placeholder, 'email', $this->errorPrefix, $additionalAttributes);
 
     return $this;
   }
@@ -156,12 +156,12 @@ class Form {
    * @param string $id Input ID
    * @param string $label Input label
    * @param string $placeholder Input placeholder text. Default: empty string
-   * @param array $addtiotionalAttributes Additional input attributes
+   * @param array $additionalAttributes Additional input attributes
    * @return object
    */
-  public function password($id, $label, $placeholder = '', $addtiotionalAttributes = []) {
+  public function password($id, $label, $placeholder = '', $additionalAttributes = []) {
 
-    $this->input($id, $label, '', $placeholder, 'password', $this->errorPrefix, $addtiotionalAttributes);
+    $this->input($id, $label, '', $placeholder, 'password', $this->errorPrefix, $additionalAttributes);
 
     return $this;
   }
@@ -173,12 +173,12 @@ class Form {
    * @param array $label Select label text.
    * @param array $options Select options array.
    * @param string|null $value Default input value. Default: empty null.
-   * @param array $addtiotionalAttributes Additional input attributes
+   * @param array $additionalAttributes Additional input attributes
    * @param string|null $errorPrefix Error prefix. Default: null
    * @return object
    */
-  public function select($id, $label, $options, $value = null, $addtiotionalAttributes = [], $errorPrefix = null) {
-    $this->input($id, $label, $options, $value, 'select', $this->errorPrefix, $addtiotionalAttributes);
+  public function select($id, $label, $options, $value = null, $additionalAttributes = [], $errorPrefix = null) {
+    $this->input($id, $label, $options, $value, 'select', $this->errorPrefix, $additionalAttributes);
 
     return $this;
   }
@@ -188,12 +188,12 @@ class Form {
    *
    * @param string $id Input ID
    * @param string $value Default input value. Default: empty string.
-   * @param array $addtiotionalAttributes Additional input attributes
+   * @param array $additionalAttributes Additional input attributes
    * @return object
    */
-  public function hidden($id, $value, $addtiotionalAttributes = []) {
+  public function hidden($id, $value, $additionalAttributes = []) {
 
-    $this->input($id, '', $value, '', 'hidden', $this->errorPrefix, $addtiotionalAttributes);
+    $this->input($id, '', $value, '', 'hidden', $this->errorPrefix, $additionalAttributes);
 
     return $this;
   }

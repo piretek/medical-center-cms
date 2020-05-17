@@ -7,6 +7,23 @@ define('PAGE_NEEDS_AUTHORIZATION', true);
 
 require_once "includes/init.php";
 
+if (isset($_POST['type'])) {
+  switch($_POST['type']) {
+    case 'user-account' :
+
+      break;
+
+    case 'edit-patient' :
+
+      break;
+
+    case 'add-doctor' :
+    case 'edit-doctor' :
+
+      break;
+  }
+}
+
 if (IS_PATIENT) {
   $patient = $db->query("SELECT * FROM patients WHERE user = '{$_SESSION['user']}'")->fetch_assoc();
   $pesel = new PESEL($patient['pesel']);
@@ -25,7 +42,8 @@ include_once "views/header.php"; ?>
 
         $form = new Form('user');
 
-        $form->text('firstname', 'Imię', $authorizedUser['firstname'])
+        $form->hidden('type', 'user-account')
+          ->text('firstname', 'Imię', $authorizedUser['firstname'])
           ->text('lastname', 'Nazwisko', $authorizedUser['lastname'])
           ->email('email', 'E-mail', $authorizedUser['email'])
           ->password('password', 'Nowe hasło')
@@ -40,11 +58,18 @@ include_once "views/header.php"; ?>
 
         if (IS_PATIENT) :
           echo "<h2>Ustawienia konta pacjenta</h2>";
+          define('PATIENT_FORM_ID', $_SESSION['user']);
           require_once 'views/forms/edit-patient.php';
         endif;
 
-        if (IS_DOCTOR) :
-          echo "<h2>Ustawienia konta lekarza</h2>";
+        if (IS_DOCTOR || $authorizedUser['roleCode'] == 'DOCTOR') :
+          if (IS_DOCTOR) {
+            echo "<h2>Ustawienia konta lekarza</h2>";
+          }
+          else {
+            echo "<h2>Stwórz konto lekarza</h2>";
+          }
+
           define('DOCTOR_FORM_ID', $_SESSION['user']);
           require_once 'views/forms/doctor.php';
         endif;
