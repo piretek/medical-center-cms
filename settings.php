@@ -187,7 +187,7 @@ include_once "views/header.php"; ?>
               : '')
           );
 
-          $form->place('Dodaj');
+          $form->place($action == 'add' ? 'Dodaj' : 'Edytuj');
 
           break;
 
