@@ -21,7 +21,7 @@ h1:first-child, h2:first-child, h3:first-child, h4:first-child, h5:first-child, 
 
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
-  padding-top: .8em;
+  padding-top: 1.5em;
   padding-bottom: .4em;
 }
 

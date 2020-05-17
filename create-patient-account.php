@@ -21,7 +21,8 @@ if (isset($_POST['type']) && $_POST['type'] == 'create-patient') {
     'phone',
     'street',
     'house_no',
-    'city'
+    'city',
+    'postcode'
   ];
 
   foreach($requiredFields as $field) {
@@ -56,7 +57,7 @@ if (isset($_POST['type']) && $_POST['type'] == 'create-patient') {
 
   if (strlen($post['house_no']) > 10) {
     $ok = false;
-    $_SESSION['create-patient-account-create-patient-form-error-street'] = 'Numer domu i mieszkania może mieć maks. 10 znaków.';
+    $_SESSION['create-patient-account-create-patient-form-error-house_no'] = 'Numer domu i mieszkania może mieć maks. 10 znaków.';
   }
 
   if (strlen($post['city']) > 20) {
@@ -77,7 +78,7 @@ if (isset($_POST['type']) && $_POST['type'] == 'create-patient') {
       $db->real_escape_string($post['street']),
       $db->real_escape_string($post['house_no']),
       $db->real_escape_string($post['city']),
-      $db->real_escape_string($post['postcode']),
+      $db->real_escape_string($post['postcode'])
     );
 
     $successful = $db->query($insertQuery);

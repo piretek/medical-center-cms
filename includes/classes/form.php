@@ -40,6 +40,16 @@ class Form {
   }
 
   /**
+   * Changes default error key prefix
+   *
+   * @param string $prefix Error prefix
+   * @return void
+   */
+  public function setErrorPrefix($prefix) {
+    $this->errorPrefix = $prefix;
+  }
+
+  /**
    * Genertes HTML input node
    *
    * @param string $id Input ID

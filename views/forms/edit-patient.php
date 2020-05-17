@@ -20,7 +20,6 @@ else {
 
   $editPatientForm->hidden('type', 'edit-patient')
     ->hidden('id', PATIENT_FORM_ID)
-    ->text('pesel', 'PESEL:', $patient['pesel'])
     ->text('phone', 'Telefon:', $patient['phone'])
     ->text('street', 'Ulica:', $patient['street'])
     ->text('house_no', 'Nr domu/nr mieszkania:', $patient['house_no'])

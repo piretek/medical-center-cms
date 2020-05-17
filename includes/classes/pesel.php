@@ -12,7 +12,9 @@ if (!defined('SECURE_BOOT')) exit;
 class PESEL {
 
   private $pesel;
-  private $birthdate;
+  private $birthdate_day;
+  private $birthdate_month;
+  private $birthdate_year;
   private $sex;
 
   /**
@@ -155,7 +157,9 @@ class PESEL {
 
       $year = $yearPrefix.$year;
 
-      $this->birthdate = "{$day}.{$month}.{$year}";
+      $this->birthdate_day = $day;
+      $this->birthdate_month = $month;
+      $this->birthdate_year = $year;
 
       $sexInt = (int) substr($this->pesel, 9, 1);
 
@@ -181,6 +185,15 @@ class PESEL {
    * @return string|null
    */
   public function getBirthDate() {
-    return $this->birthdate;
+    return "{$this->birthdate_day}.{$this->birthdate_month}.{$this->birthdate_year}";
+  }
+
+  /**
+   * Returns person age
+   *
+   * @return string|null
+   */
+  public function getAge() {
+    return (int) date('Y', time() - mktime(0,0,0,$this->birthdate_month, $this->birthdate_day, $this->birthdate_year)) - 1970;
   }
 }
