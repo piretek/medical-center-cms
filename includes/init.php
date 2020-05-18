@@ -63,7 +63,9 @@ if (isset($_SESSION['user']) && !empty($_SESSION['user'])) {
       return $role['code'];
     }, $roles);
 
-    $hasPatientInfo = $db->query(sprintf("SELECT * FROM patients WHERE user = '%d'", $db->real_escape_string($_SESSION['user'])))->num_rows != 0;
+    $patientQuery = $db->query(sprintf("SELECT * FROM patients WHERE user = '%d'", $db->real_escape_string($_SESSION['user'])));
+
+    $hasPatientInfo = $patientQuery->num_rows != 0;
     $hasDoctorInfo = $db->query(sprintf("SELECT * FROM doctors WHERE user = '%d'", $db->real_escape_string($_SESSION['user'])))->num_rows != 0;
 
     // Define user permissions
@@ -73,15 +75,16 @@ if (isset($_SESSION['user']) && !empty($_SESSION['user'])) {
       if ($role == 'DOCTOR' || $role == 'PATIENT') {
         if ($role == 'PATIENT' && $hasPatientInfo) {
           define($ruleName, true);
+          define('PATIENT_ID', $patientQuery->fetch_assoc()['id']);
         }
-        else if (!defined($ruleName)) {
+        else if ($role == 'PATIENT' && !defined($ruleName)) {
           define($ruleName, false);
         }
 
         if ($role == 'DOCTOR' && $hasDoctorInfo) {
           define($ruleName, true);
         }
-        else if (!defined($ruleName)) {
+        else if ($role == 'DOCTOR' && !defined($ruleName)) {
           define($ruleName, false);
         }
       }

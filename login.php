@@ -150,7 +150,7 @@ else if (isset($_POST['action']) && $_POST['action'] == 'register') {
 
     $response = $db->query($createUserQuery);
     if ($response) {
-      $_SESSION['auth-success'] = 'Użytkownik pomyślnie zarejestrowany.';
+      $_SESSION['register-success'] = 'Użytkownik pomyślnie zarejestrowany.';
       header("Location: {$config['site_url']}/auth.php");
       exit();
     }

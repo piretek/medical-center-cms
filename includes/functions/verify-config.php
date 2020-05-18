@@ -1,5 +1,7 @@
 <?php
 
+if (!defined('SECURE_BOOT')) exit;
+
 function verifyConfig($config) {
   $configErrors = [];
   if (!isset($config['site_url']) || empty($config['site_url'])) {

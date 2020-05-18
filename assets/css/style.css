@@ -15,14 +15,22 @@ body {
   min-height: 100vh;
 }
 
+h1:first-child, h2:first-child, h3:first-child, h4:first-child, h5:first-child, h6:first-child {
+  padding-top: .2em;
+}
+
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
-  padding-top: .2em;
+  padding-top: 1.5em;
   padding-bottom: .4em;
 }
 
 p {
   padding: .1em 0;
+}
+
+p.nm {
+  margin: 0;
 }
 
 a, a:visited {
@@ -138,6 +146,60 @@ header {
   width: 75%;
 }
 
+.footer {
+  width: 100%;
+  background-color: #0e3570a9;
+  text-align: center;
+  margin-top: 30px;
+  font-size: 17px;
+  padding-top: 25px;
+}
+
+.footer img {
+  margin: 0 5px -5px 0;
+  max-width: 30px;
+  max-height: 30px;
+}
+
+.footer ul {
+  margin: 0;
+  list-style-type: none;
+  padding: 0;
+}
+
+.footer-h {
+  padding: 10px 20px;
+  font-weight: 300;
+}
+
+.footers {
+  padding: 5px 5px 25px;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.footer-1, .footer-2 {
+  width: 50%;
+}
+
+.footer-2 h3 {
+  display: inline-block;
+}
+
+.footer-c {
+  width: 100%;
+  padding: 5px 10px;
+  text-align: center;
+  font-size: 11px;
+}
+
+.footer hr {
+  width: 30%;
+  border-width: 1px;
+  border-color: #ffffff44;
+}
+
 .person-icon {
   margin-bottom: -3px;
 }
@@ -196,11 +258,24 @@ nav ul.dashboard li a.active {
   padding: 8px 0;
 }
 
-button, input {
+button, input, select {
   border: 0;
   outline: 0;
   font-size: 16px;
   font-family: inherit;
+}
+
+.input--container.rc {
+  display: flex;
+}
+
+.input--container.rc > .input {
+  margin: 5px 5px 0 0;
+  width: initial;
+}
+
+.input--container.rc > .input--label {
+  width: calc(100% - 18px);
 }
 
 .input--container > label {
@@ -212,7 +287,11 @@ button, input {
   color: #F44336;
 }
 
-.input--container > input {
+.input--container > input[type='text'],
+.input--container > input[type='password'],
+.input--container > input[type='email'],
+.input--container > input[type='number'],
+.input--container > select {
   background-color: #EBECF0;
   box-shadow: inset 2px 2px 5px #BABECC, inset -5px -5px 10px #FFF;
   width: 100%;
@@ -221,11 +300,16 @@ button, input {
   text-shadow: 1px 1px 0 #FFF;
   border-radius: 320px;
   transition: all 0.2s ease-in-out;
-  appearance: none;
-  -webkit-appearance: none;
 }
 
-.input--container > input:focus {
+.input--container > select {
+  font-family: inherit;
+}
+
+.input--container > input[type='text']:focus,
+.input--container > input[type='password']:focus,
+.input--container > input[type='email']:focus,
+.input--container > input[type='number']:focus {
   box-shadow: inset 1px 1px 2px #BABECC, inset -1px -1px 2px #FFF;
 }
 
@@ -283,55 +367,6 @@ form.as-anchor > button:hover {
   box-shadow: none;
 }
 
-.cards .cards-tabs {
-  display: flex;
-  margin-top: 15px;
-}
-
-.cards .cards-tabs > .cards-tabs--tab {
-  width: 100%;
-  text-align: center;
-  user-select: none;
-  cursor: pointer;
-  padding: 8px 0;
-  font-weight: 300;
-  text-transform: uppercase;
-  font-size: 1.1em;
-  transition: .2s ease-in;
-  position: relative;
-  border-bottom: 1px solid #E0E0E0;
-}
-
-.cards .cards-tabs > .cards-tabs--tab::after {
-  display: block;
-  content: ' ';
-  position: absolute;
-  height: 2px;
-  background-color: #68EBB8;
-  width: 0%;
-  bottom: -1px;
-  margin-left: 50%;
-  transition: .08s ease-in;
-}
-
-.cards .cards-tabs > .cards-tabs--tab:hover {
-  background-color: rgba(0,0,0,.08);
-}
-
-.cards .cards-tabs > .cards-tabs--tab.active::after {
-  width: 100%;
-  margin-left: 0;
-}
-
-.cards .cards-sections > .cards-sections--section {
-  display: none;
-  padding: 8px 0;
-}
-
-.cards .cards-sections > .cards-sections--section.active {
-  display: block;
-}
-
 table {
   width: 100%;
   overflow-x: auto;
@@ -358,6 +393,8 @@ td.no-entries {
 }
 
 button {
+  background: #68EBB8;
+  color: #2D2D2D;
   box-shadow:  2px 2px 5px #58c89c, -2px -2px 5px #78ffd4;
   padding: 5px 20px;
   cursor: pointer;
@@ -374,4 +411,104 @@ table form.as-anchor > button {
 
 .action-anchor {
   color: inherit !important;
+}
+
+.choice-card--set,
+.choice-card--set-v {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.choice-card--set-v-container {
+  display: flex;
+}
+
+.choice-card--set-v {
+  width: calc(100% / 7);
+  align-items: flex-start;
+  align-content: flex-start;
+  border-right: 1px solid #EFEFEF;
+}
+
+.choice-card--set-v:last-child {
+  border-right: 0;
+}
+
+div.choice-card {
+  border: 3px solid #F7F7F7;
+  width: calc((100% / 3) - 20px);
+  margin: 10px;
+  border-radius: 15px 0;
+  transition: .08s ease-in;
+  cursor: pointer;
+  position: relative;
+  user-select: none;
+}
+
+.choice-card--set-v div.choice-card {
+  width: calc((100% / 1) - 20px);
+}
+
+div.choice-card.active {
+  border: 3px solid #68EBB8;
+  background-color: #68EBB8;
+}
+
+div.choice-card > .details {
+  padding: 10px;
+}
+
+div.choice-card > .details > p {
+  margin: 0;
+}
+
+div.choice-card > .details > h4 {
+  padding: 0;
+}
+
+div.choice-card img.checked {
+  position: absolute;
+  top: calc(50% - 10px);
+  right: 15px;
+  transform: scale(2);
+}
+
+.doctor-schedule,
+section.choose {
+  display: none;
+}
+
+h2.schedule-date {
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid #EFEFEF;
+}
+
+.history-status {
+  font-size: 1.2em;
+}
+
+.reservation-type {
+  font-weight: 600;
+}
+
+.reservation-type.reserved { color: #2196F3; }
+.reservation-type.done { color: #43A047; }
+.reservation-type.cancelled { color: #D32F2F; }
+.covid-info {
+  font-size: 18px;
+  padding: 50px;
+}
+
+.covid-info .content {
+  display: flex;
+  margin: 50px 0;
+}
+
+.covid-info-issue {
+  margin: 100px 0;
+}
+
+#sympt img {
+  margin-left: -24px;
 }

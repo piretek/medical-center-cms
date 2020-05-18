@@ -10,4 +10,5 @@ $addPatientForm->hidden('type', 'create-patient')
   ->text('street', 'Ulica:')
   ->text('house_no', 'Nr domu/nr mieszkania:')
   ->text('city', 'Miasto:')
+  ->text('postcode', 'Kod pocztowy:')
   ->place();

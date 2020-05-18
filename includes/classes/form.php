@@ -45,43 +45,56 @@ class Form {
   }
 
   /**
+   * Changes default error key prefix
+   *
+   * @param string $prefix Error prefix
+   * @return void
+   */
+  public function setErrorPrefix($prefix) {
+    $this->errorPrefix = $prefix;
+  }
+
+  /**
    * Genertes HTML input node
    *
    * @param string $id Input ID
    * @param string $label Input label
-   * @param string $value Default input value. Default: empty string.
+   * @param string|array $value Default input value or array if its a select field. Default: empty string.
    * @param string $placeholder Input placeholder text. Default: empty string
    * @param string $type Input type. Default: text
    * @param string|null $errorPrefix Error prefix. Default: null
-   * @param array $addtiotionalAttributes Additional input attributes
+   * @param array $additionalAttributes Additional input attributes
    * @return void
    */
-  private function input( $id, $label, $value = '', $placeholder = '', $type = 'text', $errorPrefix = null, $addtiotionalAttributes = []) {
+  private function input( $id, $label, $value = '', $placeholder = '', $type = 'text', $errorPrefix = null, $additionalAttributes = []) {
     global $_SESSION;
 
     $defaultAttributes = [
       'id' => $id,
-      'type' => $type,
       'name' => $type == 'checkbox' ? $placeholder.'[]' : $type == 'radio' ? $placeholder : $id,
-      'placeholder' => $placeholder,
-      'value' => $value,
     ];
 
-    $attributes = array_merge($defaultAttributes, $addtiotionalAttributes);
-
-    $attributesText = '';
-    foreach($attributes as $attribute => $value) {
-      $attributesText .= "{$attribute}='{$value}' ";
+    if ($type != 'select') {
+      $defaultAttributes['type'] = $type;
+      $defaultAttributes['placeholder'] = $placeholder;
+      $defaultAttributes['value'] = $value;
     }
 
-    if ($errorPrefix === null) $errorPrefix = pathinfo(__DIR__.$_SERVER['PHP_SELF'], PATHINFO_FILENAME);
+    $attributes = array_merge($defaultAttributes, $additionalAttributes);
+
+    $attributesText = '';
+    foreach($attributes as $attribute => $attr) {
+      $attributesText .= "{$attribute}='{$attr}' ";
+    }
+
+    if ($errorPrefix === null) $errorPrefix = pathinfo(__DIR__.$_SERVER['PHP_SELF'], PATHINFO_FILENAME).'-'.$this->name;
 
     $errField = $id;
 
     if ($type == 'checkbox' || $type == 'radio') {
 
       $input = "
-        <div class='input--container input-id--{$id} rc'>
+        <div class='input--container input-{$this->name}-id--{$id} rc'>
           <input class='input' {$attributesText}>
           <label class='input--label' for='{$id}'>{$label}</label>
         </div>
@@ -89,9 +102,23 @@ class Form {
       ";
 
     }
+    else if ($type == 'select') {
+      $input = "
+        <div class='input--container input-{$this->name}-id--{$id}'>
+          <label class='input--label' for='{$id}'>{$label}</label>
+          <select class='input-{$this->name}-id--{$id}' {$attributesText}>";
+          foreach($value as $okey => $oval) {
+            $input .= "<option".($okey == $placeholder ? ' selected' : '')." value='{$okey}'>{$oval}</option>";
+          }
+
+      $input .= "
+          </select>
+        </div>
+      <span class='input--error'>".(isset($_SESSION[$errorPrefix.'-form-error-'.$errField]) ? $_SESSION[$errorPrefix.'-form-error-'.$errField] : '')."</span>";
+    }
     else {
       $input = "
-        <div class='input--container input-id--{$id}'>
+        <div class='input--container input-{$this->name}-id--{$id}'>
           <label class='input--label' for='{$id}'>{$label}</label>
           <input class='input' {$attributesText}>
           <span class='input--error'>".(isset($_SESSION[$errorPrefix.'-form-error-'.$errField]) ? $_SESSION[$errorPrefix.'-form-error-'.$errField] : '')."</span>
@@ -111,12 +138,29 @@ class Form {
    * @param string $label Input label
    * @param string $value Default input value. Default: empty string.
    * @param string $placeholder Input placeholder text. Default: empty string
-   * @param array $addtiotionalAttributes Additional input attributes
+   * @param array $additionalAttributes Additional input attributes
    * @return object
    */
-  public function text($id, $label, $value = '', $placeholder = '', $addtiotionalAttributes = []) {
+  public function text($id, $label, $value = '', $placeholder = '', $additionalAttributes = []) {
 
-    $this->input($id, $label, $value, $placeholder, 'text', $this->errorPrefix, $addtiotionalAttributes);
+    $this->input($id, $label, $value, $placeholder, 'text', $this->errorPrefix, $additionalAttributes);
+
+    return $this;
+  }
+
+  /**
+   * Generates email input field
+   *
+   * @param string $id Input ID
+   * @param string $label Input label
+   * @param string $value Default input value. Default: empty string.
+   * @param string $placeholder Input placeholder text. Default: empty string
+   * @param array $additionalAttributes Additional input attributes
+   * @return object
+   */
+  public function email($id, $label, $value = '', $placeholder = '', $additionalAttributes = []) {
+
+    $this->input($id, $label, $value, $placeholder, 'email', $this->errorPrefix, $additionalAttributes);
 
     return $this;
   }
@@ -127,12 +171,12 @@ class Form {
    * @param string $id Input ID
    * @param string $label Input label
    * @param string $placeholder Input placeholder text. Default: empty string
-   * @param array $addtiotionalAttributes Additional input attributes
+   * @param array $additionalAttributes Additional input attributes
    * @return object
    */
-  public function password($id, $label, $placeholder = '', $addtiotionalAttributes = []) {
+  public function password($id, $label, $placeholder = '', $additionalAttributes = []) {
 
-    $this->input($id, $label, '', $placeholder, 'password', $this->errorPrefix, $addtiotionalAttributes);
+    $this->input($id, $label, '', $placeholder, 'password', $this->errorPrefix, $additionalAttributes);
 
     return $this;
   }
@@ -140,12 +184,61 @@ class Form {
   /**
    * Generates text input field
    *
-   * @param string $id Input ID
-   * @param string $value Default input value. Default: empty string.
-   * @param array $addtiotionalAttributes Additional input attributes
+   * @param string $id Select ID
+   * @param array $label Select label text.
+   * @param array $options Select options array.
+   * @param string|null $value Default input value. Default: empty null.
+   * @param array $additionalAttributes Additional input attributes
+   * @param string|null $errorPrefix Error prefix. Default: null
    * @return object
    */
-  public function hidden($id, $value = '', $addtiotionalAttributes = []) {
+  public function select($id, $label, $options, $value = null, $additionalAttributes = [], $errorPrefix = null) {
+    $this->input($id, $label, $options, $value, 'select', $this->errorPrefix, $additionalAttributes);
+
+    return $this;
+  }
+
+  /**
+   * Generates radio input field
+   *
+   * @param string $id Input ID
+   * @param string $label Input label
+   * @param string $value Default input value. Default: empty string.
+   * @param array $additionalAttributes Additional input attributes
+   * @return object
+   */
+  public function radio($id, $label, $name, $value = '', $additionalAttributes = []) {
+
+    $this->input($id, $label, $value, $name, 'radio', $this->errorPrefix, $additionalAttributes);
+
+    return $this;
+  }
+
+  /**
+   * Generates checkbox input field
+   *
+   * @param string $id Input ID
+   * @param string $label Input label
+   * @param string $value Default input value. Default: empty string.
+   * @param array $additionalAttributes Additional input attributes
+   * @return object
+   */
+  public function checkbox($id, $label, $name, $value = '', $additionalAttributes = []) {
+
+    $this->input($id, $label, $value, $name, 'checkbox', $this->errorPrefix, $additionalAttributes);
+
+    return $this;
+  }
+
+  /**
+   * Generates select field
+   *
+   * @param string $id Input ID
+   * @param string $value Default input value. Default: empty string.
+   * @param array $additionalAttributes Additional input attributes
+   * @return object
+   */
+  public function hidden($id, $value, $additionalAttributes = []) {
 
     $attributesText = '';
     foreach($addtiotionalAttributes as $attribute => $value) {
