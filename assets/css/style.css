@@ -179,12 +179,21 @@ header {
   flex-wrap: wrap;
 }
 
-.footer-1, .footer-2 {
-  width: 50%;
+.footer-1, .footer-2, .footer-3 {
+  width: 30%;
 }
 
-.footer-2 h3 {
+.footer-3 h3 {
   display: inline-block;
+}
+
+.footer-3 ul {
+  display: flex;
+  justify-content: center;
+}
+
+.footer-3 li {
+  margin: 0 5px; 
 }
 
 .footer-c {

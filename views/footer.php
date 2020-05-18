@@ -17,6 +17,9 @@ if (!defined('SECURE_BOOT')) exit();
             </ul>
         </div>
         <div class="footer-2">
+          <p id="date"></p>
+        </div>  
+        <div class="footer-3">
         <img src="./assets/images/warn.png"><h3>COVID-19</h3>
             <ul>
               <li><a href="covid-info.php#sympt">Objawy</a></li>
