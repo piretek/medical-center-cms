@@ -285,3 +285,11 @@ form.as-anchor > button {
 form.as-anchor > button:hover {
   box-shadow: none;
 }
+
+div.card > .details > p {
+  margin: 0;
+}
+
+div.card > .details > h4 {
+  padding: 0;
+}
