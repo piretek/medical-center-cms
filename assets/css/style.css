@@ -15,14 +15,22 @@ body {
   min-height: 100vh;
 }
 
+h1:first-child, h2:first-child, h3:first-child, h4:first-child, h5:first-child, h6:first-child {
+  padding-top: .2em;
+}
+
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
-  padding-top: .2em;
+  padding-top: 1.5em;
   padding-bottom: .4em;
 }
 
 p {
   padding: .1em 0;
+}
+
+p.nm {
+  margin: 0;
 }
 
 a, a:visited {
@@ -116,7 +124,7 @@ header {
 }
 
 .header-logo {
-  width: 35%;
+  width: 25%;
 }
 
 .header-logo h1,
@@ -135,7 +143,7 @@ header {
 .header-navs {
   display: flex;
   justify-content: space-between;
-  width: 65%;
+  width: 75%;
 }
 
 .footer {
@@ -202,7 +210,7 @@ main {
 }
 
 div.paper {
-  padding: 10px 50px;
+  padding: 10px 50px 20px;
   background-color: #FFF;
   color: #424656;
   border-radius: 15px 0 15px 0;
@@ -250,11 +258,24 @@ nav ul.dashboard li a.active {
   padding: 8px 0;
 }
 
-button, input {
+button, input, select {
   border: 0;
   outline: 0;
   font-size: 16px;
   font-family: inherit;
+}
+
+.input--container.rc {
+  display: flex;
+}
+
+.input--container.rc > .input {
+  margin: 5px 5px 0 0;
+  width: initial;
+}
+
+.input--container.rc > .input--label {
+  width: calc(100% - 18px);
 }
 
 .input--container > label {
@@ -262,7 +283,15 @@ button, input {
   width: 100%;
 }
 
-.input--container > input {
+.input--container > span.input--error {
+  color: #F44336;
+}
+
+.input--container > input[type='text'],
+.input--container > input[type='password'],
+.input--container > input[type='email'],
+.input--container > input[type='number'],
+.input--container > select {
   background-color: #EBECF0;
   box-shadow: inset 2px 2px 5px #BABECC, inset -5px -5px 10px #FFF;
   width: 100%;
@@ -271,28 +300,34 @@ button, input {
   text-shadow: 1px 1px 0 #FFF;
   border-radius: 320px;
   transition: all 0.2s ease-in-out;
-  appearance: none;
-  -webkit-appearance: none;
 }
 
-.input--container > input:focus {
+.input--container > select {
+  font-family: inherit;
+}
+
+.input--container > input[type='text']:focus,
+.input--container > input[type='password']:focus,
+.input--container > input[type='email']:focus,
+.input--container > input[type='number']:focus {
   box-shadow: inset 1px 1px 2px #BABECC, inset -1px -1px 2px #FFF;
 }
 
-.span.success,
-.span.error {
+span.success,
+span.error {
   font-size: 1.2em;
+  font-weight: 600;
 }
 
-.span.error {
+span.error {
   color: #F44336;
 }
 
-.span.success {
+span.success {
   color: #66BB6A;
 }
 
-form > button {
+form button {
   background: #68EBB8;
   color: #2D2D2D;
   font-weight: bold;
@@ -306,7 +341,7 @@ form > button {
   transition: .5s ease-in;
 }
 
-form > button:active {
+form button:active {
   box-shadow: inset 4px 4px 9px #58c89c, inset -4px -4px 9px #78ffd4;
 }
 
@@ -326,6 +361,134 @@ form.as-anchor > button:hover {
   box-shadow: none;
 }
 
+table {
+  width: 100%;
+  overflow-x: auto;
+  border-spacing: 0;
+}
+
+table td {
+  padding: 8px 5px;
+  transition: .1s ease-in;
+}
+
+table th {
+  border-bottom: 1px solid #E0E0E0;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+table tr:hover td {
+  background-color: rgba(0,0,0,.08);
+}
+
+td.no-entries {
+  text-align: center;
+}
+
+button {
+  background: #68EBB8;
+  color: #2D2D2D;
+  box-shadow:  2px 2px 5px #58c89c, -2px -2px 5px #78ffd4;
+  padding: 5px 20px;
+  cursor: pointer;
+  font-weight: 500;
+  border-radius: 20px;
+  margin: 10px 0;
+}
+
+table form.as-anchor > button {
+  display: inline-block;
+  padding: 0;
+  margin: 0
+}
+
+.action-anchor {
+  color: inherit !important;
+}
+
+.choice-card--set,
+.choice-card--set-v {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.choice-card--set-v-container {
+  display: flex;
+}
+
+.choice-card--set-v {
+  width: calc(100% / 7);
+  align-items: flex-start;
+  align-content: flex-start;
+  border-right: 1px solid #EFEFEF;
+}
+
+.choice-card--set-v:last-child {
+  border-right: 0;
+}
+
+div.choice-card {
+  border: 3px solid #F7F7F7;
+  width: calc((100% / 3) - 20px);
+  margin: 10px;
+  border-radius: 15px 0;
+  transition: .08s ease-in;
+  cursor: pointer;
+  position: relative;
+  user-select: none;
+}
+
+.choice-card--set-v div.choice-card {
+  width: calc((100% / 1) - 20px);
+}
+
+div.choice-card.active {
+  border: 3px solid #68EBB8;
+  background-color: #68EBB8;
+}
+
+div.choice-card > .details {
+  padding: 10px;
+}
+
+div.choice-card > .details > p {
+  margin: 0;
+}
+
+div.choice-card > .details > h4 {
+  padding: 0;
+}
+
+div.choice-card img.checked {
+  position: absolute;
+  top: calc(50% - 10px);
+  right: 15px;
+  transform: scale(2);
+}
+
+.doctor-schedule,
+section.choose {
+  display: none;
+}
+
+h2.schedule-date {
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid #EFEFEF;
+}
+
+.history-status {
+  font-size: 1.2em;
+}
+
+.reservation-type {
+  font-weight: 600;
+}
+
+.reservation-type.reserved { color: #2196F3; }
+.reservation-type.done { color: #43A047; }
+.reservation-type.cancelled { color: #D32F2F; }
 .covid-info {
   font-size: 18px;
   padding: 50px;

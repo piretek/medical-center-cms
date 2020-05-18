@@ -16,9 +16,9 @@ include_once 'views/header.php';
   <div class="column col-30">
     <h1>Zaloguj się</h1>
 
-    <?php if (isset($_SESSION['auth-error'])) : ?>
-      <span class='error'>Błąd: <?= $_SESSION['auth-error'] ?></span>
-      <?php unset($_SESSION['auth-error']); ?>
+    <?php if (isset($_SESSION['login-error'])) : ?>
+      <span class='error'>Błąd: <?= $_SESSION['login-error'] ?></span>
+      <?php unset($_SESSION['login-error']); ?>
     <?php endif; ?>
 
     <form action="login.php" method="POST">
@@ -41,14 +41,14 @@ include_once 'views/header.php';
   <div class="column col-30a">
     <h1>Nie masz konta? Zarejestruj się</h1>
 
-    <?php if (isset($_SESSION['auth-error'])) : ?>
-      <span class='error'>Błąd: <?= $_SESSION['auth-error'] ?></span>
-      <?php unset($_SESSION['auth-error']); ?>
+    <?php if (isset($_SESSION['register-error'])) : ?>
+      <span class='error'>Błąd: <?= $_SESSION['register-error'] ?></span>
+      <?php unset($_SESSION['register-error']); ?>
     <?php endif; ?>
 
-    <?php if (isset($_SESSION['auth-success'])) : ?>
-      <span class='success'><?= $_SESSION['auth-success'] ?></span>
-      <?php unset($_SESSION['auth-success']); ?>
+    <?php if (isset($_SESSION['register-success'])) : ?>
+      <span class='success'><?= $_SESSION['register-success'] ?></span>
+      <?php unset($_SESSION['register-success']); ?>
     <?php endif; ?>
 
     <form action = "login.php" method="POST">

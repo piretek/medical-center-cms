@@ -20,7 +20,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'login') {
 
   foreach($acceptedKeys as $key) {
     if (!array_key_exists($key, $_POST)) {
-      $_SESSION['auth-error'] = 'Niepoprawny login lub hasło.';
+      $_SESSION['login-error'] = 'Niepoprawny login lub hasło.';
       header("Location: {$config['site_url']}/auth.php");
       exit();
     }
@@ -34,7 +34,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'login') {
   ));
 
   if ($users->num_rows == 0) {
-    $_SESSION['auth-error'] = 'Niepoprawny login lub hasło.';
+    $_SESSION['login-error'] = 'Niepoprawny login lub hasło.';
       header("Location: {$config['site_url']}/auth.php");
       exit();
   }
@@ -61,7 +61,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'login') {
       }
     }
     else {
-      $_SESSION['auth-error'] = 'Niepoprawny login lub hasło.';
+      $_SESSION['login-error'] = 'Niepoprawny login lub hasło.';
       header("Location: {$config['site_url']}/auth.php");
       exit();
     }
@@ -87,7 +87,7 @@ else if (isset($_POST['action']) && $_POST['action'] == 'register') {
 
   foreach($acceptedKeys as $key) {
     if (!array_key_exists($key, $_POST)) {
-      $_SESSION['auth-error'] = 'Niepoprawne pola.';
+      $_SESSION['register-error'] = 'Niepoprawne pola.';
       header("Location: {$config['site_url']}/auth.php");
       exit();
     }
@@ -134,7 +134,7 @@ else if (isset($_POST['action']) && $_POST['action'] == 'register') {
   }
 
   if (!$ok) {
-    $_SESSION['auth-error'] = 'Popraw pola';
+    $_SESSION['register-error'] = 'Popraw pola';
     header("Location: {$config['site_url']}/auth.php");
     exit();
   }
@@ -150,12 +150,12 @@ else if (isset($_POST['action']) && $_POST['action'] == 'register') {
 
     $response = $db->query($createUserQuery);
     if ($response) {
-      $_SESSION['auth-success'] = 'Użytkownik pomyślnie zarejestrowany.';
+      $_SESSION['register-success'] = 'Użytkownik pomyślnie zarejestrowany.';
       header("Location: {$config['site_url']}/auth.php");
       exit();
     }
     else {
-      $_SESSION['auth-error'] = 'Błąd podczas tworzenia użytkownika w bazie danych.';
+      $_SESSION['register-error'] = 'Błąd podczas tworzenia użytkownika w bazie danych.';
       header("Location: {$config['site_url']}/auth.php");
       exit();
     }
