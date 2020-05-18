@@ -179,8 +179,17 @@ header {
   flex-wrap: wrap;
 }
 
-.footer-1, .footer-2, .footer-3 {
+.footers p {
+  margin: 0;
+}
+
+.footer-1, .footer-2, .footer-3, {
   width: 30%;
+}
+
+.footer-2 {
+  padding-top: 1.5em;
+  margin: 0;
 }
 
 .footer-3 h3 {
@@ -200,7 +209,7 @@ header {
   width: 100%;
   padding: 5px 10px;
   text-align: center;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .footer hr {
@@ -487,7 +496,7 @@ h2.schedule-date {
   border-bottom: 1px solid #EFEFEF;
 }
 
-.history-status {
+.history-status {`
   font-size: 1.2em;
 }
 
@@ -514,4 +523,15 @@ h2.schedule-date {
 
 #sympt img {
   margin-left: -24px;
+}
+
+.contact-info {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.map {
+  height: 350px;
+  width: 100%;
 }

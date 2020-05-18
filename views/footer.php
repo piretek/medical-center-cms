@@ -10,11 +10,9 @@ if (!defined('SECURE_BOOT')) exit();
       <div class="footers">
         <div class="footer-1">
           <h3>Kontakt</h3>
-          <ul>
-              <li>Telefon: 555-555-555</li>
-              <li>E-mail:korona.center@medical.center</li>
-              <li>Adres: Lublin, ul. Radziwiłowska 13</li>
-            </ul>
+              <p>Telefon: 555-555-555</p>
+              <p>E-mail:korona.center@medical.center</p>
+              <p>Adres: Lublin, ul. Radziwiłowska 13</p>
         </div>
         <div class="footer-2">
           <p id="date"></p>
