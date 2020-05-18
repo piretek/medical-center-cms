@@ -32,7 +32,7 @@ if (isset($_POST) && !empty($_POST)) {
 
   if ($successful) {
     $_SESSION['success'] = 'Zarezerwowałeś wizytę! Szczegóły dot. niej znajdziesz poniżej.';
-    header("Location: {$config['site_url']}/user-reservations?id={$db->insert_id}.php");
+    header("Location: {$config['site_url']}/user-reservations.php?id={$db->insert_id}");
     exit;
   }
   else {
