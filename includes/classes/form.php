@@ -194,6 +194,38 @@ class Form {
   }
 
   /**
+   * Generates radio input field
+   *
+   * @param string $id Input ID
+   * @param string $label Input label
+   * @param string $value Default input value. Default: empty string.
+   * @param array $additionalAttributes Additional input attributes
+   * @return object
+   */
+  public function radio($id, $label, $name, $value = '', $additionalAttributes = []) {
+
+    $this->input($id, $label, $value, $name, 'radio', $this->errorPrefix, $additionalAttributes);
+
+    return $this;
+  }
+
+  /**
+   * Generates checkbox input field
+   *
+   * @param string $id Input ID
+   * @param string $label Input label
+   * @param string $value Default input value. Default: empty string.
+   * @param array $additionalAttributes Additional input attributes
+   * @return object
+   */
+  public function checkbox($id, $label, $name, $value = '', $additionalAttributes = []) {
+
+    $this->input($id, $label, $value, $name, 'checkbox', $this->errorPrefix, $additionalAttributes);
+
+    return $this;
+  }
+
+  /**
    * Generates select field
    *
    * @param string $id Input ID

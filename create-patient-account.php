@@ -84,7 +84,7 @@ if (isset($_POST['type']) && $_POST['type'] == 'create-patient') {
     $successful = $db->query($insertQuery);
 
     if ($successful) {
-      $_SESSION['create-patient-success'] = 'Konto pacjenta utworzone! Od teraz możesz zarezerwować wizytę u naszych lekarzy.';
+      $_SESSION['success'] = 'Konto pacjenta utworzone! Od teraz możesz zarezerwować wizytę u naszych lekarzy.';
       header("Location: {$config['site_url']}/user-reservations.php");
       exit;
     }

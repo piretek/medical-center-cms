@@ -14,10 +14,7 @@ include_once "views/header.php"; ?>
   <div class='paper'>
     <h1 class='paper-title'>Historia wizyt</h1>
 
-    <?php if (isset($_SESSION['create-patient-success'])) : ?>
-      <span class='success'><?= $_SESSION['create-patient-success'] ?></span>
-      <?php unset($_SESSION['create-patient-success']); ?>
-    <?php endif; ?>
+    <?php notification('success', 'success'); ?>
 
   </div>
 </main>
