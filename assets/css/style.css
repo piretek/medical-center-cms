@@ -29,6 +29,10 @@ p {
   padding: .1em 0;
 }
 
+p.nm {
+  margin: 0;
+}
+
 a, a:visited {
   color: #68EBB8;
   text-decoration: none;
@@ -297,6 +301,53 @@ form.as-anchor > button:hover {
   box-shadow: none;
 }
 
+
+table {
+  width: 100%;
+  overflow-x: auto;
+  border-spacing: 0;
+}
+
+table td {
+  padding: 8px 5px;
+  transition: .1s ease-in;
+}
+
+table th {
+  border-bottom: 1px solid #E0E0E0;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+table tr:hover td {
+  background-color: rgba(0,0,0,.08);
+}
+
+td.no-entries {
+  text-align: center;
+}
+
+button {
+  background: #68EBB8;
+  color: #2D2D2D;
+  box-shadow:  2px 2px 5px #58c89c, -2px -2px 5px #78ffd4;
+  padding: 5px 20px;
+  cursor: pointer;
+  font-weight: 500;
+  border-radius: 20px;
+  margin: 10px 0;
+}
+
+table form.as-anchor > button {
+  display: inline-block;
+  padding: 0;
+  margin: 0
+}
+
+.action-anchor {
+  color: inherit !important;
+}
+
 .choice-card--set,
 .choice-card--set-v {
   display: flex;
@@ -367,3 +418,15 @@ h2.schedule-date {
   text-align: center;
   border-bottom: 1px solid #EFEFEF;
 }
+
+.history-status {
+  font-size: 1.2em;
+}
+
+.reservation-type {
+  font-weight: 600;
+}
+
+.reservation-type.reserved { color: #2196F3; }
+.reservation-type.done { color: #43A047; }
+.reservation-type.cancelled { color: #D32F2F; }

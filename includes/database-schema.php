@@ -36,6 +36,7 @@ CREATE TABLE IF NOT EXISTS `reservations` (
   `patient` int(11) NOT NULL,
   `type` int(11) NOT NULL,
   `status` int(11) NOT NULL,
+  `treatment` TEXT NOT NULL,
   PRIMARY KEY (`id`)
   KEY `reservation_date` (`date`),
   KEY `reservation_patient` (`patient`)

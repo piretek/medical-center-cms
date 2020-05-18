@@ -22,7 +22,7 @@ if (isset($_POST) && !empty($_POST)) {
     }
   }
 
-  $query = sprintf("INSERT INTO reservations VALUES (NULL, '%s', '%s', '%s', '0')",
+  $query = sprintf("INSERT INTO reservations VALUES (NULL, '%s', '%s', '%s', '0', '')",
     $db->real_escape_string($_POST['schedule']),
     $db->real_escape_string(PATIENT_ID),
     $db->real_escape_string($_POST['type'])
