@@ -31,11 +31,12 @@ CREATE TABLE IF NOT EXISTS `patients` (
 
 $schema[] = "
 CREATE TABLE IF NOT EXISTS `reservations` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `date` int(11) NOT NULL,
   `patient` int(11) NOT NULL,
   `type` int(11) NOT NULL,
   `status` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
   KEY `reservation_date` (`date`),
   KEY `reservation_patient` (`patient`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
