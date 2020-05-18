@@ -241,7 +241,7 @@ class Form {
   public function hidden($id, $value, $additionalAttributes = []) {
 
     $attributesText = '';
-    foreach($addtiotionalAttributes as $attribute => $value) {
+    foreach($additionalAttributes as $attribute => $value) {
       $attributesText .= "{$attribute}='{$value}' ";
     }
 

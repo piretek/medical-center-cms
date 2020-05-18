@@ -304,7 +304,7 @@ include_once "views/header.php"; ?>
         $form->setErrorPrefix('user-account');
 
         $form->hidden('type', 'user-account')
-          ->text('firstname', 'Imię', $authorizedUser['firstname'], )
+          ->text('firstname', 'Imię', $authorizedUser['firstname'])
           ->text('lastname', 'Nazwisko', $authorizedUser['lastname'])
           ->email('email', 'E-mail')
           ->password('password', 'Nowe hasło')

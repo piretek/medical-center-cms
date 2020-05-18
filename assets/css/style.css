@@ -367,6 +367,55 @@ form.as-anchor > button:hover {
   box-shadow: none;
 }
 
+.cards .cards-tabs {
+  display: flex;
+  margin-top: 15px;
+}
+
+.cards .cards-tabs > .cards-tabs--tab {
+  width: 100%;
+  text-align: center;
+  user-select: none;
+  cursor: pointer;
+  padding: 8px 0;
+  font-weight: 300;
+  text-transform: uppercase;
+  font-size: 1.1em;
+  transition: .2s ease-in;
+  position: relative;
+  border-bottom: 1px solid #E0E0E0;
+}
+
+.cards .cards-tabs > .cards-tabs--tab::after {
+  display: block;
+  content: ' ';
+  position: absolute;
+  height: 2px;
+  background-color: #68EBB8;
+  width: 0%;
+  bottom: -1px;
+  margin-left: 50%;
+  transition: .08s ease-in;
+}
+
+.cards .cards-tabs > .cards-tabs--tab:hover {
+  background-color: rgba(0,0,0,.08);
+}
+
+.cards .cards-tabs > .cards-tabs--tab.active::after {
+  width: 100%;
+  margin-left: 0;
+}
+
+.cards .cards-sections > .cards-sections--section {
+  display: none;
+  padding: 8px 0;
+}
+
+.cards .cards-sections > .cards-sections--section.active {
+  display: block;
+}
+
 table {
   width: 100%;
   overflow-x: auto;
