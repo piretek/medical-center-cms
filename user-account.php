@@ -225,7 +225,7 @@ if (isset($_POST['type'])) {
       }
 
       if ($ok) {
-        $doctorExists = $db->query(sprintf("SELECT * FROM doctors WHERE id = '%d'", $db->real_escape_string($_POST['id'])))->num_rows == 0 ? false : true;
+        $doctorExists = $db->query(sprintf("SELECT * FROM doctors WHERE user = '%s'", $db->real_escape_string($_POST['id'])))->num_rows == 0 ? false : true;
 
         if ($doctorExists) {
           $query = sprintf('UPDATE doctors SET specialization = \'%d\', degree = \'%s\' WHERE user = \'%d\'',
