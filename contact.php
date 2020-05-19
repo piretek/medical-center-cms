@@ -2,6 +2,11 @@
 if (!defined('SECURE_BOOT')) define('SECURE_BOOT', true);
 
 require_once 'includes/init.php';
+
+if(isset($_POST['type']) && $_POST['type'] == 'contact-form'){
+  $_SESSION['succes'] = "Udało się wysłać wiadomość";
+}
+
 include_once 'views/header.php';
 ?>
 
@@ -27,7 +32,7 @@ include_once 'views/header.php';
         $contactForm = new Form('contact');
         
         if(AUTHORIZED){
-          $contactForm->hidden('type', 'user-account')
+          $contactForm->hidden('type', 'contact-form')
           ->text('firstname', 'Imię', $authorizedUser['firstname'])
           ->text('lastname', 'Nazwisko', $authorizedUser['lastname'])
           ->email('email', 'E-mail', $authorizedUser['email'])
@@ -35,13 +40,15 @@ include_once 'views/header.php';
           ->place('Wyślij');
         }
         else{  
-          $contactForm->hidden('type', 'user-account')
+          $contactForm->hidden('type', 'contact-form')
           ->text('firstname', 'Imię')
           ->text('lastname', 'Nazwisko')
           ->email('email', 'E-mail')
           ->text('content','Wiadomość')
           ->place('Wyślij');
         }  
+
+        notification('succes', 'succes');
       ?>
     </div>
     <div class="column col-30 info-3">
