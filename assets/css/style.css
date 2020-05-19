@@ -38,6 +38,18 @@ a, a:visited {
   text-decoration: none;
 }
 
+.m-tb-2 {
+  margin: 10px 0;
+}
+
+.m-t-2 {
+  margin: 10px 0 0;
+}
+
+.m-b-2 {
+  margin: 0 0 10px;
+}
+
 nav ul.dashboard,
 nav ul.navigation {
   list-style-type: none;
