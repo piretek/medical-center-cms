@@ -25,4 +25,4 @@ Coming soon...
   - [ ] 4.1. Zarządzanie rezerwacjami
   - [ ] 4.2. Zarządzanie grafikiem lekarzy
 - [x] 5. Hasła logowania mają mieć minimum 8 znaków, w tym co najmniej jeden znak specjalny oraz cyfrę. W bazie danych mają być zahaszowane. Dotyczy to także haseł użytkowników rejestrujących się na stronie.
-- [ ] 6. Umieść skrypt JS odpowiedzialny za wyświetlanie bieżącej daty i czasu.
+- [x] 6. Umieść skrypt JS odpowiedzialny za wyświetlanie bieżącej daty i czasu.
