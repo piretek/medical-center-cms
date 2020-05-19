@@ -17,6 +17,7 @@ include_once 'views/header.php';
         <p><b>NIP:</b> 712-23-12-734</p>
         <p><b>E-mail:</b> korona.center@medical.center</p>
         <p><b>Adres:</b> Lublin, ul. Radziwiłowska 13</p>
+        <p><b>Godziny otwarcia:</b> Pn - Pt: 8:00 - 20:00</p>
       </div>  
     </div>
     <div class="column col-50 info-2 paper">
