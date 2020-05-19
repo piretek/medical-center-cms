@@ -32,9 +32,9 @@ include_once 'views/header.php';
     </div>
     <div class="column col-50 info-2 paper">
       <img src="./assets/images/contact/write.png"><h1>Napisz do nas:</h1>
-
-      <?php notification('success', 'success'); ?>
-
+      <div>
+        <?php notification('success', 'success'); ?>
+      </div>
       <?php
         $contactForm = new Form('contact');
 
