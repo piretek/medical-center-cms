@@ -17,7 +17,6 @@ include_once 'views/header.php';
 
 <div class="column col-center">
   <div class="contact-info">
-  <?php notification('success', 'success'); ?>
     <div class="column col-20 info-1">
     <img src="./assets/images/contact/info.png"><h1>Nasze dane:</h1>
       <div class="contact-content">
@@ -33,6 +32,8 @@ include_once 'views/header.php';
     </div>
     <div class="column col-50 info-2 paper">
       <img src="./assets/images/contact/write.png"><h1>Napisz do nas:</h1>
+
+      <?php notification('success', 'success'); ?>
 
       <?php
         $contactForm = new Form('contact');
