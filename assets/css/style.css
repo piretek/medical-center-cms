@@ -183,7 +183,7 @@ header {
   margin: 0;
 }
 
-.footer-1, .footer-2, .footer-3, {
+.footer-1, .footer-2, .footer-3 {
   width: 30%;
 }
 
@@ -202,7 +202,7 @@ header {
 }
 
 .footer-3 li {
-  margin: 0 5px; 
+  margin: 0 5px;
 }
 
 .footer-c {
@@ -496,7 +496,7 @@ h2.schedule-date {
   border-bottom: 1px solid #EFEFEF;
 }
 
-.history-status {`
+.history-status {
   font-size: 1.2em;
 }
 

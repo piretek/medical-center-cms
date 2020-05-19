@@ -1,10 +1,15 @@
 <?php
 if (!defined('SECURE_BOOT')) define('SECURE_BOOT', true);
 
+define('PAGE_TITLE', 'Kontakt');
+define('PAGE_NEEDS_AUTHORIZATION', false);
+
 require_once 'includes/init.php';
 
-if(isset($_POST['type']) && $_POST['type'] == 'contact-form'){
-  $_SESSION['succes'] = "Udało się wysłać wiadomość";
+if (isset($_POST['type']) && $_POST['type'] == 'contact-form'){
+  $_SESSION['success'] = "Wiadomość została wysłana!";
+  header("Location: {$config['site_url']}/contact.php");
+  exit;
 }
 
 include_once 'views/header.php';
@@ -12,6 +17,7 @@ include_once 'views/header.php';
 
 <div class="column col-center">
   <div class="contact-info">
+  <?php notification('success', 'success'); ?>
     <div class="column col-20 info-1">
     <img src="./assets/images/contact/info.png"><h1>Nasze dane:</h1>
       <div class="contact-content">
@@ -23,32 +29,21 @@ include_once 'views/header.php';
         <p><b>E-mail:</b> korona.center@medical.center</p>
         <p><b>Adres:</b> Lublin, ul. Radziwiłowska 13</p>
         <p><b>Godziny otwarcia:</b> Pn - Pt: 8:00 - 20:00</p>
-      </div>  
+      </div>
     </div>
     <div class="column col-50 info-2 paper">
       <img src="./assets/images/contact/write.png"><h1>Napisz do nas:</h1>
-      
+
       <?php
         $contactForm = new Form('contact');
-        
-        if(AUTHORIZED){
-          $contactForm->hidden('type', 'contact-form')
-          ->text('firstname', 'Imię', $authorizedUser['firstname'])
-          ->text('lastname', 'Nazwisko', $authorizedUser['lastname'])
-          ->email('email', 'E-mail', $authorizedUser['email'])
-          ->text('content','Wiadomość')
-          ->place('Wyślij');
-        }
-        else{  
-          $contactForm->hidden('type', 'contact-form')
-          ->text('firstname', 'Imię')
-          ->text('lastname', 'Nazwisko')
-          ->email('email', 'E-mail')
-          ->text('content','Wiadomość')
-          ->place('Wyślij');
-        }  
 
-        notification('succes', 'succes');
+        $contactForm->hidden('type', 'contact-form')
+        ->text('firstname', 'Imię', AUTHORIZED ? $authorizedUser['firstname'] : '')
+        ->text('lastname', 'Nazwisko', AUTHORIZED ? $authorizedUser['lastname'] : '')
+        ->email('email', 'E-mail', AUTHORIZED ? $authorizedUser['email'] : '')
+        ->text('content','Wiadomość')
+        ->place('Wyślij');
+
       ?>
     </div>
     <div class="column col-30 info-3">
