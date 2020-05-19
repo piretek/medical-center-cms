@@ -527,11 +527,26 @@ h2.schedule-date {
 
 .contact-info {
   display: flex;
-  justify-content: center;
-  text-align: center;
+}
+
+.contact-info .column {
+  padding: 0 35px;
+}
+
+.contact-info h1 {
+  display: inline-block;
+  margin-left: 15px;
+}
+
+.info-2.paper {
+  border-radius: 15px 15px;
+}
+
+.column.col-30.info-3 {
+  text-align: right;
 }
 
 .map {
-  height: 350px;
+  height: 60%;
   width: 100%;
 }

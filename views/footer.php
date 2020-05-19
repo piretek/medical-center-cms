@@ -13,6 +13,7 @@ if (!defined('SECURE_BOOT')) exit();
               <p>Telefon: 555-555-555</p>
               <p>E-mail:korona.center@medical.center</p>
               <p>Adres: Lublin, ul. Radziwiłowska 13</p>
+              <a href="contact.php"><p>Więcej...</p></a>
         </div>
         <div class="footer-2">
           <p id="date"></p>
