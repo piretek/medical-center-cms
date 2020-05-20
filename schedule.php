@@ -21,14 +21,14 @@ else {
 }
 
 if (isset($_POST['type'])) {
-  if ($_POST['type'] == 'add') {
+  if ($_POST['type'] == 'add' || $_POST['type'] == 'edit') {
     $ok = true;
 
-    $keys = ['start', 'end', 'interval'];
+    $keys = ['start', 'end', 'interval', 'room'];
     foreach($keys as $key) {
       if (!array_key_exists($key, $_POST)) {
         $_SESSION['error'] = 'Niepoprawne pola.';
-        header("Location: {$config['site_url']}/schedule.php?action=edit&id=".$_POST['id']);
+        header("Location: {$config['site_url']}/schedule.php?action={$_POST['type']}&doctor={$_POST['doctor']}&date={$_POST['date']}");
         exit;
       }
     }
@@ -37,7 +37,7 @@ if (isset($_POST['type'])) {
     foreach($_POST as $key => $value) {
       if (empty($_POST[$key]) && in_array($key, $toCheckIfEmpty)) {
         $ok = false;
-        $_SESSION["schedule-add-form-error-{$key}"] = 'Pole nie może być puste';
+        $_SESSION["schedule-{$_POST['type']}-form-error-{$key}"] = 'Pole nie może być puste';
       }
     }
 
@@ -45,25 +45,26 @@ if (isset($_POST['type'])) {
     foreach($hours as $key) {
       if ($ok && !preg_match('/^(0[0-9]|1[0-9]|2[0-3])(:[0-5][0-9])$/', $_POST[$key])) {
         $ok = false;
-        $_SESSION["schedule-add-form-error-{$key}"] = 'Pole jest niepoprawne. Godzina powinna być w formacie HH:MM';
+        $_SESSION["schedule-{$_POST['type']}-form-error-{$key}"] = 'Pole jest niepoprawne. Godzina powinna być w formacie HH:MM';
       }
     }
 
     if (!is_numeric($_POST['interval']) || $_POST['interval'] > 60 || $_POST['interval'] < 5) {
       $ok = false;
-      $_SESSION["schedule-add-form-error-interval"] = 'Niepoprawna wartość';
+      $_SESSION["schedule-{$_POST['type']}-form-error-interval"] = 'Niepoprawna wartość';
     }
 
     list($d, $mth, $y) = explode('-', $_POST['date']);
 
     $interval = (int) $_POST['interval'];
+    $date = str_replace('-','.',$_POST['date']);
 
     list($h, $m) = explode(':', $_POST['start']);
     $start = mktime($h, $m, 0, $mth, $d, $y);
 
     if ($mcWorkHours['open-hour'][date('w', $start)] > mktime($h, $m, 0, 1, 1, 1970)) {
       $ok = false;
-      $_SESSION["schedule-add-form-error-start"] = 'Godzina nie może być mniejsza niż godzina otwarcia.';
+      $_SESSION["schedule-{$_POST['type']}-form-error-start"] = 'Godzina nie może być mniejsza niż godzina otwarcia.';
     }
 
     list($h, $m) = explode(':', $_POST['end']);
@@ -71,13 +72,13 @@ if (isset($_POST['type'])) {
 
     if ($mcWorkHours['close-hour'][date('w', $end)] < mktime($h, $m, 0, 1, 1, 1970)) {
       $ok = false;
-      $_SESSION["schedule-add-form-error-end"] = 'Godzina nie może być większa niż godzina zamknięcia.';
+      $_SESSION["schedule-{$_POST['type']}-form-error-end"] = 'Godzina nie może być większa niż godzina zamknięcia.';
     }
 
     if ($ok) {
       if ((($end - $start) / 60 % $interval) != 0 || (($end - $start) / 60) <= $interval) {
         $_SESSION['error'] = 'Lekarz musi mieć takie godziny pracy, aby zmieścił się przewidziany interwał między wizytami.';
-        header("Location: {$config['site_url']}/schedule.php?action=add&doctor={$_POST['doctor']}&date={$_POST['date']}");
+        header("Location: {$config['site_url']}/schedule.php?action={$_POST['type']}&doctor={$_POST['doctor']}&date={$_POST['date']}");
         exit;
       }
 
@@ -92,8 +93,44 @@ if (isset($_POST['type'])) {
 
       if (count($schedules) <= 2) {
         $_SESSION['error'] = 'Lekarz musi w trakcie pracy mieć min. 2 przewidziane wizyty.';
-        header("Location: {$config['site_url']}/schedule.php?action=add&doctor={$_POST['doctor']}&date={$_POST['date']}");
+        header("Location: {$config['site_url']}/schedule.php?action={$_POST['type']}&doctor={$_POST['doctor']}&date={$_POST['date']}");
         exit;
+      }
+
+      if ($_POST['type'] == 'edit') {
+        $check = sprintf("SELECT * FROM reservations INNER JOIN schedule ON schedule.id = reservations.date WHERE schedule.doctor = '%s' AND schedule.date BETWEEN '%s' AND '%s'",
+          $db->real_escape_string($_POST['doctor']),
+          $start,
+          $lastMeeting
+        );
+
+        if ($db->query($check)->num_rows != 0) {
+          $_SESSION['error'] = 'Lekarz posiada już rezerwacje w tym czasie. Nie można edytować jego grafiku.';
+          header("Location: {$config['site_url']}/schedule.php?action={$_POST['type']}&doctor={$_POST['doctor']}&date={$_POST['date']}");
+          exit;
+        }
+
+        $scheduleCheck = $db->query(sprintf("SELECT * FROM schedule WHERE doctor = '%s' AND date BETWEEN '%s' AND '%s'",
+          $db->real_escape_string($_POST['doctor']),
+          strtotime($date),
+          (strtotime($date.' +1 day') - 1)
+        ));
+
+        if ($scheduleCheck->num_rows != 0) {
+          $oldSchedule = $scheduleCheck->fetch_all(MYSQLI_ASSOC);
+
+          $deleteQuery = sprintf("DELETE FROM schedule WHERE doctor = '%s' AND date BETWEEN '%s' AND '%s'",
+            $db->real_escape_string($_POST['doctor']),
+            $oldSchedule[0]['date'],
+            $oldSchedule[count($oldSchedule) - 1]['date']
+          );
+
+          if (!$db->query($deleteQuery)) {
+            $_SESSION['error'] = 'Błąd usuwania starych wpisów godzinowych. Skontaktuj się z administratorem.';
+            header("Location: {$config['site_url']}/schedule.php?action={$_POST['type']}&doctor={$_POST['doctor']}&date={$_POST['date']}");
+            exit;
+          }
+        }
       }
 
       $check = sprintf("SELECT * FROM schedule WHERE room = '%s' AND date BETWEEN '%s' AND '%s'",
@@ -104,7 +141,7 @@ if (isset($_POST['type'])) {
 
       if ($db->query($check)->num_rows != 0) {
         $_SESSION['error'] = 'Ten gabinet jest zajęty w danych godzinach.';
-        header("Location: {$config['site_url']}/schedule.php?action=add&doctor={$_POST['doctor']}&date={$_POST['date']}");
+        header("Location: {$config['site_url']}/schedule.php?action={$_POST['type']}&doctor={$_POST['doctor']}&date={$_POST['date']}");
         exit;
       }
 
@@ -114,20 +151,50 @@ if (isset($_POST['type'])) {
       $successful = $db->query($query);
 
       if ($successful) {
-        $_SESSION['success'] = 'Dodano';
+        $_SESSION['success'] = $_POST['type'] == 'edit' ? 'Zmieniono' : 'Dodano';
         header("Location: {$config['site_url']}/schedule.php");
         exit;
       }
       else {
         $_SESSION['error'] = 'Błąd podczas wykonywania zapytania do bazy danych. Skontaktuj się z administratorem.';
-        header("Location: {$config['site_url']}/schedule.php?action=add&doctor={$_POST['doctor']}&date={$_POST['date']}");
+        header("Location: {$config['site_url']}/schedule.php?action={$_POST['type']}&doctor={$_POST['doctor']}&date={$_POST['date']}");
         exit;
       }
     }
     else {
       $_SESSION['error'] = 'Popraw błędy';
-      header("Location: {$config['site_url']}/schedule.php?action=add&doctor={$_POST['doctor']}&date={$_POST['date']}");
+      header("Location: {$config['site_url']}/schedule.php?action={$_POST['type']}&doctor={$_POST['doctor']}&date={$_POST['date']}");
       exit;
+    }
+  }
+  else if ($_POST['type'] == 'remove') {
+    $date = str_replace('-', '.', $_POST['date']);
+
+    $scheduleCheck = $db->query(sprintf("SELECT * FROM schedule WHERE doctor = '%s' AND date BETWEEN '%s' AND '%s'",
+      $db->real_escape_string($_POST['doctor']),
+      strtotime($date),
+      (strtotime($date.' +1 day') - 1)
+    ));
+
+    if ($scheduleCheck->num_rows != 0) {
+      $oldSchedule = $scheduleCheck->fetch_all(MYSQLI_ASSOC);
+
+      $deleteQuery = sprintf("DELETE FROM schedule WHERE doctor = '%s' AND date BETWEEN '%s' AND '%s'",
+        $db->real_escape_string($_POST['doctor']),
+        $oldSchedule[0]['date'],
+        $oldSchedule[count($oldSchedule) - 1]['date']
+      );
+
+      if (!$db->query($deleteQuery)) {
+        $_SESSION['error'] = 'Błąd usuwania starych wpisów godzinowych. Skontaktuj się z administratorem.';
+        header("Location: {$config['site_url']}/schedule.php?action=edit&doctor={$_POST['doctor']}&date={$_POST['date']}");
+        exit;
+      }
+      else {
+        $_SESSION['success'] = 'Usunięto.';
+        header("Location: {$config['site_url']}/schedule.php?action=");
+        exit;
+      }
     }
   }
 }
@@ -241,6 +308,13 @@ include_once "views/header.php"; ?>
 
         case 'edit' :
           echo "<h2>Edycja istniejącego wpisu</h2>";
+
+          $removeForm = new Form('remove');
+          $removeForm->hidden('type', 'remove');
+          $removeForm->hidden('doctor', $_GET['doctor']);
+          $removeForm->hidden('date', $_GET['date']);
+          $removeForm->place('Usuń wpis');
+
           echo "<p><strong>Lekarz:</strong> {$doctor['degree']} {$doctor['firstname']} {$doctor['lastname']} - {$doctor['specialization']}</p>";
           echo "<p><strong>Dzień:</strong> ".weekday(date('w', $unixDate)).', '.str_replace('-','.', $_GET['date'])."</p>";
           echo "<p><strong>Godziny pracy przychodni:</strong> ".(
