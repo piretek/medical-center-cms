@@ -2,24 +2,24 @@
 
 function weekday($day) {
   if ($day == 0) {
-    return "Poniedziałek";
+    return "Niedziela";
   }
   else if ($day == 1) {
-    return "Wtorek";
+    return "Poniedziałek";
   }
   else if ($day == 2) {
-    return "Środa";
+    return "Wtorek";
   }
   else if ($day == 3) {
-    return "Czwartek";
+    return "Środa";
   }
   else if ($day == 4) {
-    return "Piątek";
+    return "Czwartek";
   }
   else if ($day == 5) {
-    return "Sobota";
+    return "Piątek";
   }
   else if ($day == 6) {
-    return "Niedziela";
+    return "Sobota";
   }
 }
