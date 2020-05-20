@@ -109,6 +109,93 @@ if (isset($_POST['type'])) {
       }
 
       break;
+
+    case "closing-hours" :
+      $setting = $db->query("SELECT * FROM settings WHERE name = 'CLOSING-HOURS'");
+
+      $requiredArrayKeys = [
+        'close-hour',
+        'open-hour',
+      ];
+
+      $requiredArraySubKeys = ['0', '1', '2', '3', '4', '5', '6'];
+
+      $post = [
+        'close-hour' => [],
+        'open-hour' => [],
+      ];
+
+      $ok = true;
+
+      foreach($requiredArrayKeys as $key) {
+        if (is_array($_POST[$key])) {
+          foreach($requiredArraySubKeys as $subKey) {
+            $remold = false;
+
+            if (is_string($_POST[$key][$subKey])) {
+              if (!empty($_POST[$key][$subKey])) {
+                if (!preg_match('/^(0[0-9]|1[0-9]|2[0-3])(:[0-5][0-9])$/', $_POST[$key][$subKey])) {
+                  $ok = false;
+                  $_SESSION["settings-closing-hours-form-error-{$key}[{$subKey}]"] = 'Wartość musi być w formacie HH:MM';
+                }
+                else {
+                  $remold = true;
+                }
+              }
+              else {
+                $remold = true;
+              }
+            }
+            else {
+              $ok = false;
+              $_SESSION["settings-closing-hours-form-error-{$key}[{$subKey}]"] = 'Niepoprawna wartość pola';
+            }
+
+            if ($remold) {
+              list($h, $m) = explode(':', $db->real_escape_string($_POST[$key][$subKey]));
+              $post[$key][$subKey] = mktime($h, $m, 0, 1, 1, 1970);
+            }
+          }
+        }
+        else {
+          $_SESSION['error'] = 'Nieprawidłowe pole';
+          header("Location: {$config['site_url']}/settings.php#system");
+          exit;
+        }
+      }
+
+      if ($ok) {
+        if ($setting->num_rows == 0) {
+          $query = sprintf("INSERT INTO settings VALUES (NULL, 'CLOSING-HOURS', '%s')",
+            serialize($post)
+          );
+        }
+        else {
+          $query = sprintf("UPDATE settings SET value = '%s' WHERE name = 'CLOSING-HOURS'",
+            serialize($post)
+          );
+        }
+
+        $successful = $db->query($query);
+
+        if ($successful) {
+          $_SESSION['success'] = 'Zmieniono';
+          header("Location: {$config['site_url']}/settings.php#system");
+          exit;
+        }
+        else {
+          $_SESSION['error'] = 'Błąd wykonywania zapytania do bazy danych. Skontaktuj się z administratorem.';
+          header("Location: {$config['site_url']}/settings.php#system");
+          exit;
+        }
+      }
+      else {
+        $_SESSION['error'] = 'Popraw błędy';
+        header("Location: {$config['site_url']}/settings.php#system");
+        exit;
+      }
+
+      break;
   }
   exit;
 }
@@ -197,6 +284,7 @@ include_once "views/header.php"; ?>
         <div class='cards-tabs'>
           <div for='specializations' class='cards-tabs--tab'>Specjalizacje</div>
           <div for='rooms' class='cards-tabs--tab'>Gabinety</div>
+          <div for='system' class='cards-tabs--tab'>Systemowe</div>
         </div>
 
         <?php notification('success', 'success'); ?>
@@ -266,6 +354,40 @@ include_once "views/header.php"; ?>
 
               <?php endif; ?>
             </table>
+          </div>
+          <div id='system' class='cards-sections--section'>
+            <h2>Godziny otwarcia</h2>
+            <div class="columns">
+              <div class="column col-25">
+                <p>Pozostawiając pole puste, system potraktuje dzień jako taki, w który przychodnia jest zamknięta. Aby stwierdzić, że przychodnia jest w dany dzień otwarta, obydwa pola - godzina otwarcia i zamknięcia muszą być wypełnione.</p>
+                <?php
+
+                $hours = $db->query("SELECT * FROM settings WHERE name = 'CLOSING-HOURS'");
+                if ($hours->num_rows != 0) {
+                  $hours = unserialize($hours->fetch_assoc()['value']);
+
+                  foreach($hours as $key => $hoursArray) {
+                    $hours[$key] = array_map(function($unix) {
+                      return $unix != '0' ? date('H:i', $unix) : '';
+                    }, $hours[$key]);
+                  }
+                }
+
+                $days = ['1' => 'poniedziałek', '2' => 'wtorek', '3' => 'środę', '4' => 'czwartek', '5' => 'piątek', '6' => 'sobotę', '0' => 'niedzielę'];
+                $closingHours = new Form('closing-hours');
+
+                $closingHours->hidden('type', 'closing-hours');
+
+                foreach($days as $index => $day) {
+                  $closingHours->text('open-hour['.$index.']', 'Godzina otwarcia w '.$day, isset($hours['open-hour'][$index]) ? $hours['open-hour'][$index] : '', 'HH:MM');
+                  $closingHours->text('close-hour['.$index.']', 'Godzina zamknięcia w '.$day,  isset($hours['close-hour'][$index]) ? $hours['close-hour'][$index] : '', 'HH:MM');
+                }
+
+                $closingHours->place();
+
+                ?>
+              </div>
+            </div>
           </div>
         </div>
       </div>
