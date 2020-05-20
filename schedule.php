@@ -54,20 +54,30 @@ if (isset($_POST['type'])) {
       $_SESSION["schedule-add-form-error-interval"] = 'Niepoprawna wartość';
     }
 
+    list($d, $mth, $y) = explode('-', $_POST['date']);
+
+    $interval = (int) $_POST['interval'];
+
+    list($h, $m) = explode(':', $_POST['start']);
+    $start = mktime($h, $m, 0, $mth, $d, $y);
+
+    if ($mcWorkHours['open-hour'][date('w', $start)] > mktime($h, $m, 0, 1, 1, 1970)) {
+      $ok = false;
+      $_SESSION["schedule-add-form-error-start"] = 'Godzina nie może być mniejsza niż godzina otwarcia.';
+    }
+
+    list($h, $m) = explode(':', $_POST['end']);
+    $end = mktime($h, $m, 0, $mth, $d, $y);
+
+    if ($mcWorkHours['close-hour'][date('w', $end)] < mktime($h, $m, 0, 1, 1, 1970)) {
+      $ok = false;
+      $_SESSION["schedule-add-form-error-end"] = 'Godzina nie może być większa niż godzina zamknięcia.';
+    }
+
     if ($ok) {
-      list($d, $mth, $y) = explode('-', $_POST['date']);
-
-      $interval = (int) $_POST['interval'];
-
-      list($h, $m) = explode(':', $_POST['start']);
-      $start = mktime($h, $m, 0, $mth, $d, $y);
-
-      list($h, $m) = explode(':', $_POST['end']);
-      $end = mktime($h, $m, 0, $mth, $d, $y);
-
       if ((($end - $start) / 60 % $interval) != 0 || (($end - $start) / 60) <= $interval) {
         $_SESSION['error'] = 'Lekarz musi mieć takie godziny pracy, aby zmieścił się przewidziany interwał między wizytami.';
-        header("Location: {$config['site_url']}/schedule.php?action=add&doctor{$_POST['doctor']}&date={$_POST['date']}");
+        header("Location: {$config['site_url']}/schedule.php?action=add&doctor={$_POST['doctor']}&date={$_POST['date']}");
         exit;
       }
 
@@ -82,7 +92,7 @@ if (isset($_POST['type'])) {
 
       if (count($schedules) <= 2) {
         $_SESSION['error'] = 'Lekarz musi w trakcie pracy mieć min. 2 przewidziane wizyty.';
-        header("Location: {$config['site_url']}/schedule.php?action=add&doctor{$_POST['doctor']}&date={$_POST['date']}");
+        header("Location: {$config['site_url']}/schedule.php?action=add&doctor={$_POST['doctor']}&date={$_POST['date']}");
         exit;
       }
 
@@ -94,7 +104,7 @@ if (isset($_POST['type'])) {
 
       if ($db->query($check)->num_rows != 0) {
         $_SESSION['error'] = 'Ten gabinet jest zajęty w danych godzinach.';
-        header("Location: {$config['site_url']}/schedule.php?action=add&doctor{$_POST['doctor']}&date={$_POST['date']}");
+        header("Location: {$config['site_url']}/schedule.php?action=add&doctor={$_POST['doctor']}&date={$_POST['date']}");
         exit;
       }
 
@@ -110,13 +120,13 @@ if (isset($_POST['type'])) {
       }
       else {
         $_SESSION['error'] = 'Błąd podczas wykonywania zapytania do bazy danych. Skontaktuj się z administratorem.';
-        header("Location: {$config['site_url']}/schedule.php?action=add&doctor{$_POST['doctor']}&date={$_POST['date']}");
+        header("Location: {$config['site_url']}/schedule.php?action=add&doctor={$_POST['doctor']}&date={$_POST['date']}");
         exit;
       }
     }
     else {
       $_SESSION['error'] = 'Popraw błędy';
-      header("Location: {$config['site_url']}/schedule.php?action=add&doctor{$_POST['doctor']}&date={$_POST['date']}");
+      header("Location: {$config['site_url']}/schedule.php?action=add&doctor={$_POST['doctor']}&date={$_POST['date']}");
       exit;
     }
   }
