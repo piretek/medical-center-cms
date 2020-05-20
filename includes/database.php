@@ -6,7 +6,7 @@ function import_database_schema($db, $name) {
 
   $needsToImport = false;
 
-  $requiredColumns = ['doctors', 'patients', 'reservations', 'roles', 'rooms', 'schedule', 'specializations', 'users'];
+  $requiredColumns = ['doctors', 'patients', 'reservations', 'roles', 'rooms', 'settings', 'schedule', 'specializations', 'users'];
   $columns = $db->query('SHOW TABLES');
   if ($columns->num_rows == 0) {
     $needsToImport = true;
