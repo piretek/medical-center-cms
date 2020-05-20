@@ -22,6 +22,12 @@ if (isset($_POST) && !empty($_POST)) {
     }
   }
 
+  if ($db->query(sprintf("SELECT * FROM reservations WHERE date = '%s'", $db->real_escape_string($_POST['schedule'])))->num_rows != 0) {
+    $_SESSION['error'] = 'Ten termin został właśnie zarezerwowany przez inną osobę. Przepraszamy i prosimy o wybranie innego terminu.';
+    header("Location: {$config['site_url']}/new-reservation.php");
+    exit;
+  }
+
   $query = sprintf("INSERT INTO reservations VALUES (NULL, '%s', '%s', '%s', '0', '')",
     $db->real_escape_string($_POST['schedule']),
     $db->real_escape_string(PATIENT_ID),
