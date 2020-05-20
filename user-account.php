@@ -23,7 +23,7 @@ if (isset($_POST['type'])) {
       foreach($acceptedKeys as $key) {
         if (!array_key_exists($key, $_POST)) {
           $_SESSION['error'] = 'Niepoprawne pola.';
-          header("Location: {$config['site_url']}/auth.php");
+          header("Location: {$config['site_url']}/user-account.php");
           exit();
         }
       }
