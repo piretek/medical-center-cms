@@ -5,7 +5,7 @@ if (!defined('SECURE_BOOT')) define('SECURE_BOOT', true);
 require_once 'includes/init.php';
 
 if (AUTHORIZED) {
-  header ("Location: {$config['site-url']}/create-patient-account.php");
+  header ("Location: {$config['site_url']}/create-patient-account.php");
   exit();
 }
 
