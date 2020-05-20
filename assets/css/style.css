@@ -431,7 +431,6 @@ form.as-anchor > button:hover {
 
 table {
   width: 100%;
-  overflow-x: auto;
   border-spacing: 0;
 }
 
@@ -575,9 +574,8 @@ h2.schedule-date {
   margin-left: -24px;
 }
 
-table.doctor-schedule--table {
+div.doctor-schedule--table--container {
   overflow-x: auto;
-  width: 100%;
 }
 
 table.doctor-schedule--table td,
