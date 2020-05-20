@@ -76,6 +76,7 @@ nav ul.navigation li a {
 
 main {
   padding: 50px;
+  min-height: calc(100vh - 351px);
 }
 
 .columns {

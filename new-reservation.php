@@ -104,32 +104,38 @@ include_once "views/header.php"; ?>
           else {
             $dates = $dates->fetch_all(MYSQLI_ASSOC);
 
-            $lastDay = 0; ?>
+            $lastDay = $maxDaysCount = 0; ?>
 
             <div class='choice-card--set-v-container'>
 
-            <?php foreach($dates as $index => $date) {
-              $day = (int) date('d', $date['date']);
+            <?php
 
-              if ($day != $lastDay) : ?>
-                <div class='choice-card--set-v'>
-                <h2 class='schedule-date'><?= date('d.m.Y', $date['date']) ?></h2>
-              <?php endif;
+            foreach($dates as $index => $date) {
+              if ($maxDaysCount <= $maxDays) {
+                $day = (int) date('d', $date['date']);
 
-              if ($date['status'] === null || $date['status'] == 2) : ?>
-                <div class='choice-card schedule-card' data-schedule='<?= $date['id'] ?>'>
-                  <div class='details'>
-                    <h4><?= date('H:i', $date['date']) ?></h4>
+                if ($day != $lastDay) : $maxDaysCount += 1; ?>
+                  <div class='choice-card--set-v'>
+                  <h2 class='schedule-date'><?= date('d.m.Y', $date['date']) ?></h2>
+                <?php endif;
+
+                if ($date['status'] === null || $date['status'] == 2) : ?>
+                  <div class='choice-card schedule-card' data-schedule='<?= $date['id'] ?>'>
+                    <div class='details'>
+                      <h4><?= date('H:i', $date['date']) ?></h4>
+                    </div>
                   </div>
-                </div>
-              <?php endif;
+                <?php endif;
 
-              if (!isset($dates[$index + 1]) || $day != (int) date('d', $dates[$index + 1]['date'])) : ?>
-                </div>
-              <?php endif;
+                if (!isset($dates[$index + 1]) || $day != (int) date('d', $dates[$index + 1]['date'])) : ?>
+                  </div>
+                <?php endif;
 
-              $lastDay = $day;
-            } ?>
+                $lastDay = $day;
+              }
+            }
+
+            ?>
             </div>
           <?php } ?>
         </div>
