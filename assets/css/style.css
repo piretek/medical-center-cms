@@ -574,3 +574,19 @@ h2.schedule-date {
 #sympt img {
   margin-left: -24px;
 }
+
+table.doctor-schedule--table {
+  overflow-x: auto;
+  width: 100%;
+}
+
+table.doctor-schedule--table td,
+table.doctor-schedule--table th {
+  min-width: 250px;
+  text-align: center;
+}
+
+table.doctor-schedule--table td.date,
+table.doctor-schedule--table th.date {
+  min-width: initial;
+}
