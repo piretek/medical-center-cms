@@ -122,7 +122,7 @@ include_once "views/header.php"; ?>
 
                 if ($day != $lastDay) : $maxDaysCount += 1; ?>
                   <div class='choice-card--set-v'>
-                  <h2 class='schedule-date'><?= date('d.m.Y', $date['date']) ?></h2>
+                  <h2 class='schedule-date'><?= date('d.m.Y', $date['date']) ?><br /><?= weekday(date('w', $date['date'])) ?></h2>
                 <?php endif;
 
                 if ($date['status'] === null || $date['status'] == 2) : ?>
