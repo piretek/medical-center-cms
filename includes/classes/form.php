@@ -74,7 +74,10 @@ class Form {
       'name' => $type == 'checkbox' ? $placeholder.'[]' : $type == 'radio' ? $placeholder : $id,
     ];
 
-    if ($type != 'select') {
+    if ($type == 'textarea') {
+      $defaultAttributes['placeholder'] = $placeholder;
+    }
+    else if ($type != 'select') {
       $defaultAttributes['type'] = $type;
       $defaultAttributes['placeholder'] = $placeholder;
       $defaultAttributes['value'] = $value;
@@ -115,6 +118,15 @@ class Form {
           </select>
         </div>
       <span class='input--error'>".(isset($_SESSION[$errorPrefix.'-form-error-'.$errField]) ? $_SESSION[$errorPrefix.'-form-error-'.$errField] : '')."</span>";
+    }
+    else if ($type == 'textarea') {
+      $input = "
+        <div class='input--container input-{$this->name}-id--{$id}'>
+          <label class='input--label' for='{$id}'>{$label}</label>
+          <textarea class='input' {$attributesText} rows='3'>{$value}</textarea>
+          <span class='input--error'>".(isset($_SESSION[$errorPrefix.'-form-error-'.$errField]) ? $_SESSION[$errorPrefix.'-form-error-'.$errField] : '')."</span>
+        </div>
+      ";
     }
     else {
       $input = "
@@ -246,6 +258,23 @@ class Form {
     }
 
     $this->inputs[] = "<input type='hidden' name='{$id}' value='{$value}' {$attributesText} />";
+
+    return $this;
+  }
+
+  /**
+   * Generates textarea input field
+   *
+   * @param string $id Input ID
+   * @param string $label Input label
+   * @param string $value Default input value. Default: empty string.
+   * @param string $placeholder Input placeholder text. Default: empty string
+   * @param array $additionalAttributes Additional input attributes
+   * @return object
+   */
+  public function textarea($id, $label, $value = '', $placeholder = '', $additionalAttributes = []) {
+
+    $this->input($id, $label, $value, $placeholder, 'textarea', $this->errorPrefix, $additionalAttributes);
 
     return $this;
   }

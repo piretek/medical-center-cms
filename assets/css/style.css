@@ -271,7 +271,7 @@ nav ul.dashboard li a.active {
   padding: 8px 0;
 }
 
-button, input, select {
+button, input, select, textarea {
   border: 0;
   outline: 0;
   font-size: 16px;
@@ -304,6 +304,7 @@ button, input, select {
 .input--container > input[type='password'],
 .input--container > input[type='email'],
 .input--container > input[type='number'],
+.input--container > textarea,
 .input--container > select {
   background-color: #EBECF0;
   box-shadow: inset 2px 2px 5px #BABECC, inset -5px -5px 10px #FFF;
@@ -322,8 +323,17 @@ button, input, select {
 .input--container > input[type='text']:focus,
 .input--container > input[type='password']:focus,
 .input--container > input[type='email']:focus,
-.input--container > input[type='number']:focus {
+.input--container > input[type='number']:focus,
+.input--container > textarea:focus {
   box-shadow: inset 1px 1px 2px #BABECC, inset -1px -1px 2px #FFF;
+}
+
+.input--container > textarea {
+  transition: initial;
+  border-radius: 0 50px;
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 101px;
 }
 
 span.success,
@@ -587,4 +597,18 @@ table.doctor-schedule--table th {
 table.doctor-schedule--table td.date,
 table.doctor-schedule--table th.date {
   min-width: initial;
+}
+
+.pagination--container {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+}
+
+.pagination--container > .pagination {
+  margin: 0 10px;
+}
+
+.pagination--container > a.pagination {
+  color: #6991ce;
 }
