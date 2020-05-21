@@ -16,13 +16,13 @@ Coming soon...
   - [ ] 2.2. Możliwość edycji danych pacjenta
   - [ ] 2.3. Rezerwację wizyty (lekarz, termin)
   - [ ] 2.4. Możliwość anulowania rezerwacji (nie można usuwać minionych wizyt)
-- [ ] 3. Część dla administratora:
-  - [ ] 3.1. Możliwość dodawania, usuwania, edycji lekarzy
-  - [ ] 3.2. Możliwość dodawania, usuwania, edycji pracowników
-  - [ ] 3.3. Ustalanie grafiku pracy lekarzy
-  - [ ] 3.4. Zarządzanie rezerwacjami
-- [ ] 4. Część dla pracownika:
-  - [ ] 4.1. Zarządzanie rezerwacjami
-  - [ ] 4.2. Zarządzanie grafikiem lekarzy
+- [x] 3. Część dla administratora:
+  - [x] 3.1. Możliwość dodawania, usuwania, edycji lekarzy
+  - [x] 3.2. Możliwość dodawania, usuwania, edycji pracowników
+  - [x] 3.3. Ustalanie grafiku pracy lekarzy
+  - [x] 3.4. Zarządzanie rezerwacjami
+- [x] 4. Część dla pracownika:
+  - [x] 4.1. Zarządzanie rezerwacjami
+  - [x] 4.2. Zarządzanie grafikiem lekarzy
 - [ ] 5. Hasła logowania mają mieć minimum 8 znaków, w tym co najmniej jeden znak specjalny oraz cyfrę. W bazie danych mają być zahaszowane. Dotyczy to także haseł użytkowników rejestrujących się na stronie.
 - [ ] 6. Umieść skrypt JS odpowiedzialny za wyświetlanie bieżącej daty i czasu.
