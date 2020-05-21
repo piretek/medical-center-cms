@@ -192,19 +192,37 @@ header {
   flex-wrap: wrap;
 }
 
-.footer-1, .footer-2 {
-  width: 50%;
+.footers p {
+  margin: 0;
 }
 
-.footer-2 h3 {
+.footer-1, .footer-2, .footer-3 {
+  width: 30%;
+}
+
+.footer-2 {
+  padding-top: 1.5em;
+  margin: 0;
+}
+
+.footer-3 h3 {
   display: inline-block;
+}
+
+.footer-3 ul {
+  display: flex;
+  justify-content: center;
+}
+
+.footer-3 li {
+  margin: 0 5px;
 }
 
 .footer-c {
   width: 100%;
   padding: 5px 10px;
   text-align: center;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .footer hr {
@@ -620,4 +638,30 @@ table.doctor-schedule--table th.date {
 
 p.search-results {
   display: none;
+}
+
+.contact-info {
+  display: flex;
+}
+
+.contact-info .column {
+  padding: 0 35px;
+}
+
+.contact-info h1 {
+  display: inline-block;
+  margin-left: 15px;
+}
+
+.info-2.paper {
+  border-radius: 15px 15px;
+}
+
+.column.col-30.info-3 {
+  text-align: right;
+}
+
+.map {
+  height: 60%;
+  width: 100%;
 }

@@ -72,7 +72,7 @@ include_once "views/header.php"; ?>
 
         if ($reservations->num_rows == 0) : ?>
           <tr>
-            <td colspan='5'>Brak dotychczasowych wizyt. Aby zarezerwować wizytę, przejdź <a href='<?= $config['site_url'].'/new-reservation.php' ?>'>tutaj</a>.
+            <td colspan='6'>Brak dotychczasowych wizyt. Aby zarezerwować wizytę, przejdź <a href='<?= $config['site_url'].'/new-reservation.php' ?>'>tutaj</a>.
           </tr>
         <?php else : ?>
           <?php while($reservation = $reservations->fetch_assoc()) : ?>
