@@ -30,15 +30,15 @@ if (isset($_POST) && !empty($_POST)) {
 
   $query = sprintf("INSERT INTO reservations VALUES (NULL, '%s', '%s', '%s', '0', '')",
     $db->real_escape_string($_POST['schedule']),
-    $db->real_escape_string(PATIENT_ID),
+    $db->real_escape_string(isset($_POST['patient']) && !empty($_POST['patient']) ? $_POST['patient'] : PATIENT_ID),
     $db->real_escape_string($_POST['type'])
   );
 
   $successful = $db->query($query);
 
   if ($successful) {
-    $_SESSION['success'] = 'Zarezerwowałeś wizytę! Szczegóły dot. niej znajdziesz poniżej.';
-    header("Location: {$config['site_url']}/user-reservations.php?id={$db->insert_id}");
+    $_SESSION['success'] = isset($_POST['patient']) && !empty($_POST['patient']) ? 'Wizyta została zarezerwowana' : 'Zarezerwowałeś wizytę! Szczegóły dot. niej znajdziesz poniżej.';
+    header("Location: {$config['site_url']}/".(isset($_POST['patient']) && !empty($_POST['patient']) ? '' : 'user-')."reservations.php?id={$db->insert_id}");
     exit;
   }
   else {
@@ -47,6 +47,8 @@ if (isset($_POST) && !empty($_POST)) {
     exit;
   }
 }
+
+$mcWorker = IS_ADMIN || IS_EMPLOYEE || IS_DOCTOR;
 
 include_once "views/header.php"; ?>
 
@@ -58,8 +60,34 @@ include_once "views/header.php"; ?>
 
     <?php notification('error', 'error'); ?>
 
-    <section class='choose-1'>
-      <h2>1. Wybierz lekarza</h2>
+    <?php if ($mcWorker) : ?>
+      <section class='choose choose-1'>
+        <h2>1. Wybierz pacjenta</h2>
+        <div class="input--container input-add-id--search">
+          <label class="input--label" for="search">Wyszukiwanie pacjentów:</label>
+          <input class="input" id="search" name="search" type="text" placeholder="np. imię lub nazwisko lub pesel" value="">
+          <span class="input--error"></span>
+        </div>
+        <p class='search-results'><strong>Wybrany klient:</strong> <span></span></p>
+        <table class='search-results'>
+          <thead>
+            <tr>
+              <th>Imię i nazwisko</th>
+              <th>PESEL</th>
+              <th>Akcje</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td colspan="3" class="no-results">Wpisz min. 2 znaki.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    <?php endif;?>
+
+    <section class='choose choose-<?= $mcWorker ? '2' : '1' ?> choose-doctor'>
+      <h2><?= $mcWorker ? '2' : '1' ?>. Wybierz lekarza</h2>
       <div class='choice-card--set'>
         <?php
 
@@ -82,8 +110,8 @@ include_once "views/header.php"; ?>
         ?>
       </div>
     </section>
-    <section class='choose choose-2'>
-      <h2>2. Znajdź dogodny termin</h2>
+    <section class='choose choose-<?= $mcWorker ? '3' : '2' ?> choose-schedule'>
+      <h2><?= $mcWorker ? '3' : '2' ?>. Znajdź dogodny termin</h2>
 
       <?php foreach($doctors as $doctor) : ?>
         <div class='doctor-schedule doctor-schedule--<?= $doctor['id'] ?>'>
@@ -94,7 +122,7 @@ include_once "views/header.php"; ?>
           <?php
 
           $maxDays = 7; // max days to present
-          $limit = 5; // time when reservation is able to create from in hours
+          $limit = 0; // time when reservation is able to create from in hours
 
           $maxDaysUnix = time() + ($maxDays * 24 * 60 * 60);
 
@@ -147,24 +175,47 @@ include_once "views/header.php"; ?>
         </div>
       <?php endforeach; ?>
     </section>
-    <section class='choose choose-3'>
+    <section class='choose choose-<?= $mcWorker ? '4' : '3' ?> choose-type'>
       <?php
       $reservation = new Form('new-reservation');
       $reservation->setErrorPrefix('new-reservation');
       ?>
 
-      <h2>3. Rodzaj wizyty</h2>
+      <h2><?= $mcWorker ? '4' : '3' ?>. Rodzaj wizyty</h2>
       <?php
       $reservation->radio('type-1', 'NFZ', 'type', '1', ['checked' => 'checked']);
       $reservation->radio('type-2', 'Prywatna', 'type', '2');
 
       $reservation->hidden('schedule', '0');
+      if ($mcWorker) $reservation->hidden('patient', '0');
       $reservation->place('Zarezerwuj');
 
       ?>
     </section>
   </div>
 </main>
+
+<?php if ($mcWorker) : ?>
+  <script type='text/javascript'>
+    const patients = [
+      <?php
+
+      $patients = $db->query("SELECT patients.*, users.firstname, users.lastname FROM patients JOIN users ON patients.user = users.id ORDER BY users.lastname, users.firstname ASC");
+      $patients = $patients->fetch_all(MYSQLI_ASSOC);
+      foreach($patients as $index => $patient) : ?>
+        {
+          'id': '<?= $patient['id'] ?>',
+          'firstname': '<?= $patient['firstname'] ?>',
+          'lastname': '<?= $patient['lastname'] ?>',
+          'pesel': '<?= $patient['pesel'] ?>'
+        }<?= array_key_last($patient) == $index ? ',' : '' ?>
+      <?php endforeach;
+
+      ?>
+    ];
+  </script>
+<?php endif; ?>
+
 <script src='assets/js/reservation.js'></script>
 
 <?php include_once "views/footer.php"; ?>

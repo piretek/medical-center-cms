@@ -447,6 +447,7 @@ table {
 table td {
   padding: 8px 5px;
   transition: .1s ease-in;
+  text-align: center;
 }
 
 table th {
@@ -549,6 +550,10 @@ section.choose {
   display: none;
 }
 
+section.choose-1 {
+  display: block;
+}
+
 h2.schedule-date {
   width: 100%;
   text-align: center;
@@ -611,4 +616,8 @@ table.doctor-schedule--table th.date {
 
 .pagination--container > a.pagination {
   color: #6991ce;
+}
+
+p.search-results {
+  display: none;
 }

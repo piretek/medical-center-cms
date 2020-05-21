@@ -160,7 +160,11 @@ include_once "views/header.php"; ?>
       }
 
     else : ?>
-
+      <div class='m-tb-2'>
+        <a href='new-reservation.php'>
+          <button>Dodaj nową rezerwację</button>
+        </a>
+      </div>
       <table>
         <tr>
           <th>Data i godzina</th>
