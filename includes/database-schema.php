@@ -19,11 +19,12 @@ $schema[] = "
 CREATE TABLE IF NOT EXISTS `patients` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user` int(11) NOT NULL,
-  `pesel` int(11) NOT NULL,
+  `pesel` varchar(11) NOT NULL,
   `phone` int(9) NOT NULL,
   `street` varchar(30) CHARACTER SET utf8 NOT NULL,
   `house_no` varchar(10) CHARACTER SET utf8 NOT NULL,
   `city` varchar(20) CHARACTER SET utf8 NOT NULL,
+  `postcode` varchar(6) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`id`),
   KEY `patients_users` (`user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
@@ -35,8 +36,7 @@ CREATE TABLE IF NOT EXISTS `reservations` (
   `patient` int(11) NOT NULL,
   `type` int(11) NOT NULL,
   `status` int(11) NOT NULL,
-  KEY `reservation_date` (`date`),
-  KEY `reservation_patient` (`patient`)
+  `treatment` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
 
 $schema[] = "
@@ -85,6 +85,9 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
 
 $schema[] = "
+CREATE TABLE `medical-center`.`settings` ( `id` INT NOT NULL AUTO_INCREMENT , `name` VARCHAR(20) NOT NULL , `value` TEXT NOT NULL , PRIMARY KEY (`id`), UNIQUE (`name`)) ENGINE = InnoDB;";
+
+$schema[] = "
 ALTER TABLE `doctors`
   ADD CONSTRAINT `doctors_specializations` FOREIGN KEY (`specialization`) REFERENCES `specializations` (`id`),
   ADD CONSTRAINT `doctors_users` FOREIGN KEY (`user`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;";
@@ -95,8 +98,13 @@ ALTER TABLE `patients`
 
 $schema[] = "
 ALTER TABLE `reservations`
-  ADD CONSTRAINT `reservation_date` FOREIGN KEY (`date`) REFERENCES `schedule` (`id`),
-  ADD CONSTRAINT `reservation_patient` FOREIGN KEY (`patient`) REFERENCES `patients` (`id`);";
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `reservation_date` (`date`),
+  ADD KEY `reservation_patient` (`patient`);";
+
+$schema[] = "
+ALTER TABLE `reservations`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT";
 
 $schema[] = "
 ALTER TABLE `schedule`

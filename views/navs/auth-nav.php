@@ -15,7 +15,10 @@ if (!defined('SECURE_BOOT')) exit();
       </a>
     </li>
     <li>
-      <a href='#'>Wyloguj się</a>
+      <form action="login.php" method="POST" class='as-anchor'>
+        <input type="hidden" value="logout" name="action">
+        <button type="submit">Wyloguj się</button>
+      </form>
     </li>
 
     <?php else : ?>
