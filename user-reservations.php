@@ -29,7 +29,7 @@ if (isset($_POST['type'])) {
 }
 
 if (isset($_GET['id']) && !empty($_GET['id'])) {
-  $reservationsSelectQuery = sprintf("SELECT reservations.id, reservations.type, reservations.status, schedule.date, rooms.number as room, CONCAT(doctors.degree, ' ', users.firstname, ' ', users.lastname ) as doctor, specializations.name AS specialization, reservations.treatment FROM ((((reservations INNER JOIN schedule ON schedule.id = reservations.date) INNER JOIN doctors ON doctors.id = schedule.doctor) INNER JOIN users ON users.id = doctors.user) INNER JOIN rooms ON rooms.id = schedule.room) INNER JOIN specializations ON specializations.id = doctors.specialization WHERE reservations.id = '%s'", $db->real_escape_string($_GET['id']));
+  $reservationsSelectQuery = sprintf("SELECT reservations.id, reservations.patient, reservations.type, reservations.status, schedule.date, rooms.number as room, CONCAT(doctors.degree, ' ', users.firstname, ' ', users.lastname ) as doctor, specializations.name AS specialization, reservations.treatment FROM ((((reservations INNER JOIN schedule ON schedule.id = reservations.date) INNER JOIN doctors ON doctors.id = schedule.doctor) INNER JOIN users ON users.id = doctors.user) INNER JOIN rooms ON rooms.id = schedule.room) INNER JOIN specializations ON specializations.id = doctors.specialization WHERE reservations.id = '%s'", $db->real_escape_string($_GET['id']));
   $reservations = $db->query($reservationsSelectQuery);
 
   if ($reservations->num_rows == 0) {

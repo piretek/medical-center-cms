@@ -152,8 +152,13 @@ if (isset($_POST['type'])) {
             }
 
             if ($remold) {
-              list($h, $m) = explode(':', $db->real_escape_string($_POST[$key][$subKey]));
-              $post[$key][$subKey] = mktime($h, $m, 0, 1, 1, 1970);
+              if(!empty($_POST[$key][$subKey])){
+                list($h, $m) = explode(':', $db->real_escape_string($_POST[$key][$subKey]));
+                $post[$key][$subKey] = mktime($h, $m, 0, 1, 1, 1970);
+              }
+              else{
+                $post[$key][$subKey] = 0;
+              }
             }
           }
         }

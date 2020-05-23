@@ -122,4 +122,9 @@ INSERT INTO `roles` (`id`, `name`, `code`) VALUES
 (3, 'Lekarz', 'DOCTOR'),
 (4, 'Pacjent', 'PATIENT');";
 
+$schema[] = "
+INSERT INTO `settings` (`id`, `name`, `value`) VALUES
+(NULL, 'CLOSING-HOURS', 'a:2:{s:10:\"close-hour\";a:7:{i:0;i:0;i:1;i:0;i:2;i:0;i:3;i:0;i:4;i:0;i:5;i:0;i:6;i:0;}s:9:\"open-hour\";a:7:{i:0;i:0;i:1;i:0;i:2;i:0;i:3;i:0;i:4;i:0;i:5;i:0;i:6;i:0;}}');
+";
+
 return $schema;
