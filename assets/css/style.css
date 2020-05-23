@@ -38,6 +38,18 @@ a, a:visited {
   text-decoration: none;
 }
 
+.m-tb-2 {
+  margin: 10px 0;
+}
+
+.m-t-2 {
+  margin: 10px 0 0;
+}
+
+.m-b-2 {
+  margin: 0 0 10px;
+}
+
 nav ul.dashboard,
 nav ul.navigation {
   list-style-type: none;
@@ -64,6 +76,7 @@ nav ul.navigation li a {
 
 main {
   padding: 50px;
+  min-height: calc(100vh - 351px);
 }
 
 .columns {
@@ -276,7 +289,7 @@ nav ul.dashboard li a.active {
   padding: 8px 0;
 }
 
-button, input, select {
+button, input, select, textarea {
   border: 0;
   outline: 0;
   font-size: 16px;
@@ -309,6 +322,7 @@ button, input, select {
 .input--container > input[type='password'],
 .input--container > input[type='email'],
 .input--container > input[type='number'],
+.input--container > textarea,
 .input--container > select {
   background-color: #EBECF0;
   box-shadow: inset 2px 2px 5px #BABECC, inset -5px -5px 10px #FFF;
@@ -327,8 +341,17 @@ button, input, select {
 .input--container > input[type='text']:focus,
 .input--container > input[type='password']:focus,
 .input--container > input[type='email']:focus,
-.input--container > input[type='number']:focus {
+.input--container > input[type='number']:focus,
+.input--container > textarea:focus {
   box-shadow: inset 1px 1px 2px #BABECC, inset -1px -1px 2px #FFF;
+}
+
+.input--container > textarea {
+  transition: initial;
+  border-radius: 0 50px;
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 101px;
 }
 
 span.success,
@@ -345,7 +368,8 @@ span.success {
   color: #66BB6A;
 }
 
-form button {
+form button,
+button {
   background: #68EBB8;
   color: #2D2D2D;
   font-weight: bold;
@@ -359,8 +383,13 @@ form button {
   transition: .5s ease-in;
 }
 
-form button:active {
+form button:active,
+button:active {
   box-shadow: inset 4px 4px 9px #58c89c, inset -4px -4px 9px #78ffd4;
+}
+
+form.as-anchor {
+  display: inline-block;
 }
 
 form.as-anchor > button {
@@ -379,15 +408,64 @@ form.as-anchor > button:hover {
   box-shadow: none;
 }
 
+.cards .cards-tabs {
+  display: flex;
+  margin-top: 15px;
+}
+
+.cards .cards-tabs > .cards-tabs--tab {
+  width: 100%;
+  text-align: center;
+  user-select: none;
+  cursor: pointer;
+  padding: 8px 0;
+  font-weight: 300;
+  text-transform: uppercase;
+  font-size: 1.1em;
+  transition: .2s ease-in;
+  position: relative;
+  border-bottom: 1px solid #E0E0E0;
+}
+
+.cards .cards-tabs > .cards-tabs--tab::after {
+  display: block;
+  content: ' ';
+  position: absolute;
+  height: 2px;
+  background-color: #68EBB8;
+  width: 0%;
+  bottom: -1px;
+  margin-left: 50%;
+  transition: .08s ease-in;
+}
+
+.cards .cards-tabs > .cards-tabs--tab:hover {
+  background-color: rgba(0,0,0,.08);
+}
+
+.cards .cards-tabs > .cards-tabs--tab.active::after {
+  width: 100%;
+  margin-left: 0;
+}
+
+.cards .cards-sections > .cards-sections--section {
+  display: none;
+  padding: 8px 0;
+}
+
+.cards .cards-sections > .cards-sections--section.active {
+  display: block;
+}
+
 table {
   width: 100%;
-  overflow-x: auto;
   border-spacing: 0;
 }
 
 table td {
   padding: 8px 5px;
   transition: .1s ease-in;
+  text-align: center;
 }
 
 table th {
@@ -490,6 +568,10 @@ section.choose {
   display: none;
 }
 
+section.choose-1 {
+  display: block;
+}
+
 h2.schedule-date {
   width: 100%;
   text-align: center;
@@ -523,6 +605,39 @@ h2.schedule-date {
 
 #sympt img {
   margin-left: -24px;
+}
+
+div.doctor-schedule--table--container {
+  overflow-x: auto;
+}
+
+table.doctor-schedule--table td,
+table.doctor-schedule--table th {
+  min-width: 250px;
+  text-align: center;
+}
+
+table.doctor-schedule--table td.date,
+table.doctor-schedule--table th.date {
+  min-width: initial;
+}
+
+.pagination--container {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+}
+
+.pagination--container > .pagination {
+  margin: 0 10px;
+}
+
+.pagination--container > a.pagination {
+  color: #6991ce;
+}
+
+p.search-results {
+  display: none;
 }
 
 .contact-info {

@@ -19,8 +19,11 @@ else {
   $patient = $patients->fetch_assoc();
 
   $editPatientForm->hidden('type', 'edit-patient')
-    ->hidden('id', PATIENT_FORM_ID)
-    ->text('phone', 'Telefon:', $patient['phone'])
+    ->hidden('id', PATIENT_FORM_ID);
+
+  if (defined('PATIENT_FORM_ALLOW_PESEL') && PATIENT_FORM_ALLOW_PESEL) $editPatientForm->text('pesel', 'PESEL:', $patient['pesel']);
+
+  $editPatientForm->text('phone', 'Telefon:', $patient['phone'])
     ->text('street', 'Ulica:', $patient['street'])
     ->text('house_no', 'Nr domu/nr mieszkania:', $patient['house_no'])
     ->text('city', 'Miasto:', $patient['city'])

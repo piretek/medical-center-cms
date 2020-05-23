@@ -23,7 +23,7 @@ if (isset($_POST['type'])) {
       foreach($acceptedKeys as $key) {
         if (!array_key_exists($key, $_POST)) {
           $_SESSION['error'] = 'Niepoprawne pola.';
-          header("Location: {$config['site_url']}/auth.php");
+          header("Location: {$config['site_url']}/user-account.php");
           exit();
         }
       }
@@ -304,7 +304,7 @@ include_once "views/header.php"; ?>
         $form->setErrorPrefix('user-account');
 
         $form->hidden('type', 'user-account')
-          ->text('firstname', 'Imię', $authorizedUser['firstname'], )
+          ->text('firstname', 'Imię', $authorizedUser['firstname'])
           ->text('lastname', 'Nazwisko', $authorizedUser['lastname'])
           ->email('email', 'E-mail')
           ->password('password', 'Nowe hasło')

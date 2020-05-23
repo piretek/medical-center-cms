@@ -5,7 +5,7 @@ if (!defined('SECURE_BOOT')) define('SECURE_BOOT', true);
 require_once 'includes/init.php';
 
 if (AUTHORIZED) {
-  header ("Location: {$config['site-url']}/create-patient-account.php");
+  header ("Location: {$config['site_url']}/create-patient-account.php");
   exit();
 }
 
@@ -41,15 +41,8 @@ include_once 'views/header.php';
   <div class="column col-30a">
     <h1>Nie masz konta? Zarejestruj się</h1>
 
-    <?php if (isset($_SESSION['register-error'])) : ?>
-      <span class='error'>Błąd: <?= $_SESSION['register-error'] ?></span>
-      <?php unset($_SESSION['register-error']); ?>
-    <?php endif; ?>
-
-    <?php if (isset($_SESSION['register-success'])) : ?>
-      <span class='success'><?= $_SESSION['register-success'] ?></span>
-      <?php unset($_SESSION['register-success']); ?>
-    <?php endif; ?>
+    <?php notification('auth-error', 'error'); ?>
+    <?php notification('auth-success', 'success'); ?>
 
     <form action = "login.php" method="POST">
       <input type="hidden" name="action" value="register">
