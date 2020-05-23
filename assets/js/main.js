@@ -16,7 +16,9 @@ function clock() {
   var months = new Array("stycznia", "lutego", "marca", "kwietnia", "maja", "czerwca", "lipca", "sierpnia", "września", "października", "listopada", "grudnia");
 
   var showDate = days[dayN] + ', ' + day + ' ' + months[month] + ' ' + year + "</br><b>" + hour + ':' + minute + ':' + second + "</b>";
-  document.getElementById('date').innerHTML = showDate;
+  if(document.querySelector('#date')){
+    document.querySelector('#date').innerHTML = showDate;
+  }
 }
 
 window.addEventListener('load', function() {

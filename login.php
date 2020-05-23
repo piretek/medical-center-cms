@@ -141,11 +141,12 @@ else if (isset($_POST['action']) && $_POST['action'] == 'register') {
   else {
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    $createUserQuery = sprintf("INSERT INTO users (email, password, firstname, lastname, role) VALUES ('%s', '%s','%s','%s', '4')",
+    $createUserQuery = sprintf("INSERT INTO users (email, password, firstname, lastname, role) VALUES ('%s', '%s','%s','%s', '%s')",
       $db->real_escape_string($email),
       $db->real_escape_string($hashedPassword),
       $db->real_escape_string($name),
-      $db->real_escape_string($sname)
+      $db->real_escape_string($sname),
+      ($db->query("SELECT * FROM users")->num_rows == 0 ? '1' : '4')
     );
 
     $response = $db->query($createUserQuery);
