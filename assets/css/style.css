@@ -177,6 +177,10 @@ div.paper {
   margin-left: 25px;
 }
 
+div.paper.no-shadow {
+  box-shadow: none;
+}
+
 h1.paper-title {
   text-transform: uppercase;
   padding: 15px 0;
@@ -211,4 +215,39 @@ nav ul.dashboard li a.active {
   background: #68EBB8;
   box-shadow: inset 20px 20px 60px #58c89c,
             inset -20px -20px 60px #78ffd4;
+}
+
+.main--1 {
+  display: flex;
+  flex-wrap: wrap;
+  height: auto;
+  width: 100%;
+  text-align: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.main--2, .main--3, .main--4 {
+  display: flex;
+  height: 100%;
+  text-align: center;
+  align-items: center;
+  margin: 15px;
+}
+
+.main--2--1.paper.no-shadow {
+  margin: 10px;
+  padding: 20px;
+  width: calc((100% / 3) - 25px);
+  height: auto;
+}
+
+.main--3--1.paper, .main--4--2.paper{
+  margin: 35px;
+  padding: 20px;
+  height: auto;
+}
+
+.main--3--2, .main--4--1 {
+  height: auto;
 }
