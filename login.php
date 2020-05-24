@@ -113,9 +113,25 @@ else if (isset($_POST['action']) && $_POST['action'] == 'register') {
     $_SESSION["register-form-error-email"] = "Niepoprawny email";
   }
 
+  $msg = "Hasło wymaga małych liter, 1 dużej litery, 1 cyfry i 1 znaku specjalnego.";
+
   if (!preg_match("/^(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/", $password)) {
     $ok = false;
-    $_SESSION["register-form-error-password"] = "Niepoprawne hasło";
+    $_SESSION["register-form-error-password"] = $msg;
+  }
+
+  $requiredChars = '.,_-?+-!@#%^*[]{}/';
+  $requiredChars = str_split($requiredChars);
+
+  $specialCharExists = false;
+  $splittedPassword = str_split($password);
+  foreach($splittedPassword as $char) {
+    if (in_array($char, $requiredChars)) $specialCharExists = true;
+  }
+
+  if (!$specialCharExists) {
+    $ok = false;
+    $_SESSION["register-form-error-password"] = $msg;
   }
 
   if ($password != $repeatedPassword) {
