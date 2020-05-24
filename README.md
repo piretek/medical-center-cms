@@ -6,10 +6,10 @@
 ## Instalacja
 Coming soon...
 ## Założenia projektu
-- [ ] 1. Część dla gościa:
-  - [ ] 1.1. Informacje dotyczące przychodni (kontakt, adres, godziny otwarcia, strona główna, o firmie)
+- [x] 1. Część dla gościa:
+  - [x] 1.1. Informacje dotyczące przychodni (kontakt, adres, godziny otwarcia, strona główna, o firmie)
   - [x] 1.2. Wybór rodzaju rezerwowanej wizyty prywatna/nfz
-  - [ ] 1.3. Listę lekarzy wraz z podziałem na specjalizacje, pobieraną z bazy danych oraz godziny i terminy przyjęć
+  - [x] 1.3. Listę lekarzy wraz z podziałem na specjalizacje, pobieraną z bazy danych oraz godziny i terminy przyjęć
   - [x] 1.4. Możliwość założenia konta pacjenta (wizytę może zarezerwować tylko użytkownik zalogowany)
 - [x] 2. Część dla pacjenta:
   - [x] 2.1. Historię wizyt i badań/zabiegów
