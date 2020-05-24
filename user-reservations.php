@@ -38,9 +38,10 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
   }
   else {
     $reservation = $reservations->fetch_assoc();
-    if ($reservation['patient'] != $_SESSION['user']) {
+
+    if ($reservation['patient'] != PATIENT_ID) {
       header("Location: {$config['site_url']}/user-reservations.php");
-    exit;
+      exit;
     }
   }
 }

@@ -11,13 +11,13 @@ if (!defined('SECURE_BOOT')) exit();
         <div class="footer-1">
           <h3>Kontakt</h3>
               <p>Telefon: 555-555-555</p>
-              <p>E-mail:korona.center@medical.center</p>
+              <p>E-mail: kontakt@korona.center</p>
               <p>Adres: Lublin, ul. Radziwiłowska 13</p>
               <a href="contact.php"><p>Więcej...</p></a>
         </div>
         <div class="footer-2">
           <p id="date"></p>
-        </div>  
+        </div>
         <div class="footer-3">
         <img src="./assets/images/warn.png"><h3>COVID-19</h3>
             <ul>
@@ -25,10 +25,10 @@ if (!defined('SECURE_BOOT')) exit();
               <li><a href="covid-info.php#prev">Profilaktyka</a></li>
               <li><a href="covid-info.php#cure">Leczenie</a></li>
             </ul>
-        </div>  
+        </div>
       </div>
       <div class="footer-c">
-        <div>Copyright © 2020 Korona Center. Wszelkie prawa zastrzeżone.</div>      
+        <div>Copyright © 2020 Korona Center. Wszelkie prawa zastrzeżone.</div>
         <div>Stronę wykonali: Michal Kowalski | Piotr Czarnecki | Paulina Sznajder</div>
       </div>
     </div>
