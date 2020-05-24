@@ -268,7 +268,7 @@ if (isset($_POST['type'])) {
           $db->real_escape_string($post['street']),
           $db->real_escape_string($post['house_no']),
           $db->real_escape_string($post['city']),
-          $db->real_escape_string($post['postcode']),
+          $db->real_escape_string($post['postcode'])
         );
       }
       else {
