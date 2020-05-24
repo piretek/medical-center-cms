@@ -64,9 +64,10 @@ if (isset($_SESSION['user']) && !empty($_SESSION['user'])) {
     }, $roles);
 
     $patientQuery = $db->query(sprintf("SELECT * FROM patients WHERE user = '%d'", $db->real_escape_string($_SESSION['user'])));
+    $doctorQuery = $db->query(sprintf("SELECT * FROM doctors WHERE user = '%d'", $db->real_escape_string($_SESSION['user'])));
 
     $hasPatientInfo = $patientQuery->num_rows != 0;
-    $hasDoctorInfo = $db->query(sprintf("SELECT * FROM doctors WHERE user = '%d'", $db->real_escape_string($_SESSION['user'])))->num_rows != 0;
+    $hasDoctorInfo = $doctorQuery->num_rows != 0;
 
     // Define user permissions
     foreach($roles as $role) {
@@ -83,6 +84,7 @@ if (isset($_SESSION['user']) && !empty($_SESSION['user'])) {
 
         if ($role == 'DOCTOR' && $hasDoctorInfo) {
           define($ruleName, true);
+          define('DOCTOR_ID', $doctorQuery->fetch_assoc()['id']);
         }
         else if ($role == 'DOCTOR' && !defined($ruleName)) {
           define($ruleName, false);

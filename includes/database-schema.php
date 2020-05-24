@@ -85,6 +85,9 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
 
 $schema[] = "
+CREATE TABLE `medical-center`.`settings` ( `id` INT NOT NULL AUTO_INCREMENT , `name` VARCHAR(20) NOT NULL , `value` TEXT NOT NULL , PRIMARY KEY (`id`), UNIQUE (`name`)) ENGINE = InnoDB;";
+
+$schema[] = "
 ALTER TABLE `doctors`
   ADD CONSTRAINT `doctors_specializations` FOREIGN KEY (`specialization`) REFERENCES `specializations` (`id`),
   ADD CONSTRAINT `doctors_users` FOREIGN KEY (`user`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;";
@@ -118,5 +121,10 @@ INSERT INTO `roles` (`id`, `name`, `code`) VALUES
 (2, 'Pracownik', 'EMPLOYEE'),
 (3, 'Lekarz', 'DOCTOR'),
 (4, 'Pacjent', 'PATIENT');";
+
+$schema[] = "
+INSERT INTO `settings` (`id`, `name`, `value`) VALUES
+(NULL, 'CLOSING-HOURS', 'a:2:{s:10:\"close-hour\";a:7:{i:0;i:0;i:1;i:0;i:2;i:0;i:3;i:0;i:4;i:0;i:5;i:0;i:6;i:0;}s:9:\"open-hour\";a:7:{i:0;i:0;i:1;i:0;i:2;i:0;i:3;i:0;i:4;i:0;i:5;i:0;i:6;i:0;}}');
+";
 
 return $schema;
