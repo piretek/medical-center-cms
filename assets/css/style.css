@@ -69,7 +69,8 @@ nav ul.navigation {
 
 nav ul.navigation li a {
   color: inherit;
-  display: block;
+  display: flex;
+  align-items: center;
   padding: 30px 15px;
   height: 100%;
 }
@@ -130,7 +131,7 @@ main {
 .column.offset-1per3 { margin-left: calc(100% / 3); }
 .column.offset-2per3 { margin-left: calc(calc(100% / 3) * 2) ; }
 
-.about--headers, .about--texts {
+.about--columns {
   margin: 60px;
   display: flex;
   justify-content: space-evenly;
@@ -138,11 +139,19 @@ main {
   text-align: center;
 }
 
+.about--column {
+  width: calc((100% / 3) - 25px);
+}
+
 .about--header {
   border-radius: 69px;
   background: #031745;
   box-shadow:  8px 8px 17px #03194a, -8px -8px 17px #052164;
-  width: calc((100% / 3) - 25px);
+  min-height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
 .about--text {
@@ -150,7 +159,6 @@ main {
   border-radius: 69px;
   background: #041d57;
   box-shadow: inset 27px 27px 54px #031540, inset -27px -27px 54px #05256e;
-  width: calc((100% / 3) - 35px);
 }
 
 .about--header > h2,
@@ -750,11 +758,25 @@ main ul {
   nav ul.navigation li a {
     padding: 15px 10px;
   }
+
+  .choice-card--set-v {
+    width: calc(100% / 5);
+  }
 }
 
 @media screen and (max-width: 1024px) {
   header {
     padding: 0;
+  }
+
+  nav.dashboard-navigation {
+    width: 25%;
+    margin: 0;
+  }
+
+  div.paper {
+    width: 75%;
+    margin: 0;
   }
 
   .header-navs {
@@ -783,13 +805,36 @@ main ul {
   .info-3 {
     width: 100% !important;
   }
+
+  .choice-card--set-v {
+    width: calc(100% / 3);
+  }
 }
 
 @media screen and (max-width: 768px) {
+  main {
+    padding: 0 50px;
+  }
+
   .header-logo,
   .header-navs {
     width: 100%;
     padding: 10px 0;
+  }
+
+  .column.col-50,
+  .column.col-25,
+  .column.col-1per3 {
+    width: 100%;
+  }
+
+  main > .dashboard-navigation,
+  main > div.paper {
+    width: 100%;
+  }
+
+  ul, ol {
+    padding: 0;
   }
 
   .authorize-nav {
@@ -799,6 +844,11 @@ main ul {
   .login-page .column {
     width: 100%;
     padding: 10px 100px;
+  }
+
+  .about--column {
+    width: 100%;
+    padding: 20px 0;
   }
 
   .main--2 {
@@ -851,6 +901,10 @@ main ul {
 }
 
 @media screen and (max-width: 560px) {
+  main {
+    padding: 25px;
+  }
+
   .login-page .column {
     width: 100%;
     padding: 10px 25px;
@@ -872,6 +926,12 @@ main ul {
 
   .main--4--1 {
     order: 2;
+  }
+
+  .contact-info h1 {
+    text-align: center;
+    width: 100%;
+    margin: 0;
   }
 
   .footer-1,
