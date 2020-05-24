@@ -59,23 +59,23 @@ include_once "views/header.php";
     }
     else {
       while($doctor = $doctors->fetch_assoc()) : ?>
-          
+
             <div class="doc-profile paper">
             <a href="<?= $config['site_url'].'/new-reservation.php?car='.$doctor['id']?>" class="doctor">
               <div class="title-doc">
                 <h2><?= $doctor['degree'].' '.$doctor['doctor'] ?></h2>
                 <h4><?= $doctor['spec'] ?></h4>
               </div>
-                <strong>Godziny przyjęć:</strong> 
+                <strong>Godziny przyjęć:</strong>
                 <ul class="doc-card-worktime">
-                  <?php 
+                  <?php
                     foreach($week as $index => $day) {
                       list($polish, $english) = explode('|', $day);
-                      list($day, $month, $year) = explode('.', date('d.m.Y', strtotime("{$english} next week")));
-                      
+                      list($day, $month, $year) = explode('.', date('d.m.Y', strtotime("{$english} this week")));
+
                       $timeDayStart = mktime(0, 0, 0, $month, $day, $year);
-                      $timeDayEnd = mktime(23, 59, 59, $month, $day, $year);  
-                      
+                      $timeDayEnd = mktime(23, 59, 59, $month, $day, $year);
+
                       $worktimeQuery = "SELECT * FROM schedule WHERE doctor = '{$doctor['id']}' AND date BETWEEN '{$timeDayStart}' AND '{$timeDayEnd}'";
                       $worktime = $db->query($worktimeQuery);
 
@@ -83,19 +83,19 @@ include_once "views/header.php";
 
                         <li><strong><?= $polish ?>:</strong><br/> Nie pracuje</li>
 
-                      <?php else : 
+                      <?php else :
 
                         $worktime = $worktime->fetch_all(MYSQLI_ASSOC);?>
-                        
+
                         <li><strong><?= $polish ?>:</strong> <?= date('H:i', $worktime[0]['date']); ?> - <?= date('H:i', $worktime[count($worktime) - 1]['date'] + ($worktime[count($worktime) - 1]['date'] - $worktime[count($worktime) - 2]['date'])); ?>
 
-                      <?php endif; 
+                      <?php endif;
                     }
                   ?>
                 </ul>
               </a>
-              </div>         
-      <?php endwhile; 
+              </div>
+      <?php endwhile;
     }?>
 </div>
 
