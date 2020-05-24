@@ -754,6 +754,54 @@ main ul {
   height: auto;
 }
 
+
+.doctors-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+}
+
+.doctors-container a{
+ text-decoration: none;
+ color: #011533;
+}
+
+.doc-profile.paper {
+ width: 30%;
+ margin: 20px;
+}
+
+.title-doc h4 {
+ padding-top: 0;
+}
+
+.doc-card-worktime {
+ width: 100%;
+ display: flex;
+ justify-content: center;
+ list-style-type: none;
+ padding: 0;
+}
+
+.doc-card-worktime li {
+ padding-right: 5px;
+ margin-right: 15px;
+ width: calc(100%/7);
+ border-right: solid 2px #011533 ;
+}
+
+.doc-card-worktime li:nth-of-type(7){
+ border-right: none;
+ margin-right: 0;
+ padding-right: 0;
+}
+
+.doc-profile:hover {
+ transform: scale(1.05);
+ transition: 100ms;
+}
+
 @media screen and (max-width: 1440px) {
   nav ul.navigation li a {
     padding: 15px 10px;
@@ -761,6 +809,23 @@ main ul {
 
   .choice-card--set-v {
     width: calc(100% / 5);
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .doc-card-worktime {
+    display: inline-block;
+    width: 100%;
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .doc-card-worktime li {
+    width: 100%;
+    padding: 3px 0;
+    border-bottom: solid 2px #011533;
+    border-right: none;
+    margin: 0;
   }
 }
 
