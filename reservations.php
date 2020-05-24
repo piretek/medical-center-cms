@@ -176,7 +176,7 @@ include_once "views/header.php"; ?>
         </tr>
         <?php
 
-        $query = sprintf("SELECT reservations.*, CONCAT(pu.firstname, ' ', pu.lastname) as patient, CONCAT(doctors.degree, ' ', du.firstname, ' ', du.lastname) as doctor, schedule.date FROM (( ( ( reservations JOIN patients ON reservations.patient = patients.id) JOIN schedule ON schedule.id = reservations.date) JOIN users AS pu ON patients.user = pu.id ) JOIN doctors ON schedule.doctor = doctors.id) JOIN users AS du ON doctors.user = du.id %s ORDER BY schedule.date DESC", !IS_ADMIN && !IS_EMPLOYEE ? "WHERE schedule.doctor = '".DOCOR_ID."'" : '');
+        $query = sprintf("SELECT reservations.*, CONCAT(pu.firstname, ' ', pu.lastname) as patient, CONCAT(doctors.degree, ' ', du.firstname, ' ', du.lastname) as doctor, schedule.date FROM (( ( ( reservations JOIN patients ON reservations.patient = patients.id) JOIN schedule ON schedule.id = reservations.date) JOIN users AS pu ON patients.user = pu.id ) JOIN doctors ON schedule.doctor = doctors.id) JOIN users AS du ON doctors.user = du.id %s ORDER BY schedule.date DESC", !IS_ADMIN && !IS_EMPLOYEE ? "WHERE schedule.doctor = '".DOCTOR_ID."'" : '');
 
         $perPage = 15;
         $allReservations = $db->query($query)->num_rows;
