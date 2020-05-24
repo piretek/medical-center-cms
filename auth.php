@@ -12,7 +12,7 @@ if (AUTHORIZED) {
 include_once 'views/header.php';
 ?>
 
-<div class="columns col-center">
+<div class="columns col-center login-page">
   <div class="column col-30">
     <h1>Zaloguj się</h1>
 
