@@ -208,14 +208,13 @@ include_once "views/header.php"; ?>
           'firstname': '<?= $patient['firstname'] ?>',
           'lastname': '<?= $patient['lastname'] ?>',
           'pesel': '<?= $patient['pesel'] ?>'
-        }<?= array_key_last($patient) == $index ? ',' : '' ?>
+        }<?= array_key_last($patients) != $index ? ',' : '' ?>
       <?php endforeach;
 
       ?>
     ];
   </script>
 <?php endif; ?>
-
 <script src='assets/js/reservation.js'></script>
 
 <?php include_once "views/footer.php"; ?>
